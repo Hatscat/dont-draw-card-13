@@ -24,12 +24,11 @@ export function getGameSrc(): SrcProps {
     html: {
       head: [
         // htmlDoctype(), // The DOCTYPE breaks the CSS sizes without unit
-        titleTag("template"),
+        titleTag("Don't draw card 13!"),
         viewportMeta(),
         manifestLink(),
       ],
       body: [
-        headerElement(),
         element(Elements.page, { tagProps: { id: domElementIds.page } }),
       ],
     },

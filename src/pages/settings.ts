@@ -14,7 +14,6 @@ export function defineSettingsPage() {
             children: "Back",
           }),
         ]),
-        assign(prop(domElementIds.headerTitle, "innerText"), Text("Settings")),
       ),
     },
   );

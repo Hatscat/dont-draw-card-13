@@ -11,7 +11,7 @@ export function defineHomePage() {
           domElementIds.page,
           [
             element(Elements.bigTitle, {
-              children: "Game Template",
+              children: "Don't draw card 13!",
               closed: true,
             }),
             element(Elements.button, {
@@ -22,11 +22,10 @@ export function defineHomePage() {
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToSettingsPage) },
               closed: true,
-              children: "Settings",
+              children: "Perks",
             }),
           ],
         ),
-        assign(prop(domElementIds.headerTitle, "innerText"), Text("")),
       ),
     },
   );

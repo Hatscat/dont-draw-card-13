@@ -33,10 +33,6 @@ export function defineGamePage() {
           }),
         ]),
         assign(
-          prop(domElementIds.headerTitle, "innerText"),
-          Text("Game Template"),
-        ),
-        assign(
           state.gameState,
           GameState.Play,
         ),

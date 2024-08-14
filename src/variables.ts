@@ -13,7 +13,6 @@ export const { state, functions, domElementIds, canvasContext, params } =
       },
       domElementIds: {
         page: "",
-        headerTitle: "",
         canvas: "",
       },
       canvasContext: "",
