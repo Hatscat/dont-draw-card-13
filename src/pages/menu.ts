@@ -16,13 +16,13 @@ export function defineMenuPage() {
             }),
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToGamePage) },
-              closed: true,
               children: "Play",
+              closed: true,
             }),
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToPerksPage) },
-              closed: true,
               children: "Perks",
+              closed: true,
             }),
           ],
         ),

@@ -2,19 +2,19 @@ import { element, setInnerHtml } from "../deps.ts";
 import { defineFunc, execFunc, statements } from "../deps.ts";
 import { domElementIds, Elements, functions } from "../variables.ts";
 
-export function definePerksPage() {
+export function defineGameOverPage() {
   return defineFunc(
     {
-      name: functions.goToPerksPage,
+      name: functions.goToGameOverPage,
       body: statements(
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
-            children: "PERKS PAGE",
+            children: "Game Over",
             closed: true,
           }),
           element(Elements.button, {
-            tagProps: { onclick: execFunc(functions.goToMenuPage) },
-            children: "Menu",
+            tagProps: { onclick: execFunc(functions.goToPerksPage) },
+            children: "Continue",
             closed: true,
           }),
         ]),

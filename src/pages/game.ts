@@ -23,15 +23,11 @@ export function defineGamePage() {
             closed: true,
           }),
           element(Elements.button, {
-            tagProps: { onclick: execFunc(functions.goToMenuPage) },
+            tagProps: { onclick: execFunc(functions.goToGameOverPage) },
+            children: "Give up",
             closed: true,
-            children: "Back",
           }),
         ]),
-        // assign(
-        //   state.gameState,
-        //   GameState.Play,
-        // ),
       ),
     },
   );

@@ -14,6 +14,7 @@ import { domElementIds, Elements, functions, state } from "./variables.ts";
 import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
+import { defineGameOverPage } from "./pages/game-over.ts";
 
 export function getGameSrc(): SrcProps {
   return {
@@ -38,10 +39,10 @@ function getScript() {
     // Register the service worker
     registerServiceWorker(),
     // Declare functions
-    defineMenuPage(), // Menu
-    definePerksPage(), // Perks
+    defineMenuPage(),
+    definePerksPage(),
     defineGamePage(),
-    // defineGameOverPage(), // ?
+    defineGameOverPage(),
     // shop will be a dialog, not a page
 
     // Init the state

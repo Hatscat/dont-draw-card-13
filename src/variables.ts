@@ -8,6 +8,7 @@ export const { state, functions, domElementIds, params } = provideTmpVarNames(
       goToMenuPage: "",
       goToGamePage: "",
       goToPerksPage: "",
+      goToGameOverPage: "",
     },
     domElementIds: {
       page: "",
