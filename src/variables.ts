@@ -17,6 +17,9 @@ export const { state, functions, domElementIds, params } = provideTmpVarNames(
       time: "",
       item: "",
     },
+    texts: {
+      gameTitle: "", // "Don't draw card 13!"
+    },
   } as const,
 );
 

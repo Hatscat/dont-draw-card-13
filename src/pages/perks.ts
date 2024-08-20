@@ -9,12 +9,12 @@ export function definePerksPage() {
       body: statements(
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
-            children: "PERKS PAGE",
+            children: "Perks",
             closed: true,
           }),
           element(Elements.button, {
             tagProps: { onclick: execFunc(functions.goToMenuPage) },
-            children: "Menu",
+            children: "Continue",
             closed: true,
           }),
         ]),
