@@ -1,28 +1,16 @@
-import { font, Text } from "./deps.ts";
+// import { font, Text } from "./deps.ts";
 
 export const config = {
-  headerHeight: 48,
-  player: {
-    icon: Text("🤖"),
-    radius: 32,
-    positionX: 32 + 80,
-    speed: 5,
+  perksCost: {
+    displayTheDeckLength: "1",
+    displayTheDiscardedLength: "1",
+    startEveryLevelWithTheResetJokerInHand: "1",
+    startEveryLevelWith10Money: "1",
+    twentyPercentShopDiscount: "1",
+    freeShopReload: "100",
+    // twentyPercentMoreMoney: "1",
   },
-  target: {
-    icon: Text("👾"),
-    radius: 64,
-    offsetX: 64 + 80,
-    speed: 500,
-    hp: 3,
-    recoverDelay: 300,
-  },
-  bullet: {
-    icon: Text("⚙️"),
-    radius: 8,
-    speed: 9,
-  },
-  timer: {
-    offsetY: 64,
-    font: font(32),
+  jokersCost: {
+    resetTheCurrentLevel: "1",
   },
 } as const;

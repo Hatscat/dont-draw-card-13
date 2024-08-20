@@ -1,4 +1,13 @@
-# [PROJECT_NAME]
+# [Don't Draw Card 13!](#)
+
+## Description
+
+[js13kGames](https://js13kgames.com/) 2024 entry. A card game in which you don't
+want to draw the card with the number 13.
+
+## Author
+
+- Hatscat (Lucien Boudy)
 
 ## Setup
 

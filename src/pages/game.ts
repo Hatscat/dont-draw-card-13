@@ -1,22 +1,16 @@
-import { actions, dispatch } from "../data-store/mutator.ts";
-import { GameState } from "../data-store/state.ts";
+// import { actions, dispatch } from "../data-store/mutator.ts";
+// import { GameState } from "../data-store/state.ts";
 import {
   assign,
   defineFunc,
   element,
   execFunc,
-  INLINE_EVENT_ARG_NAME,
-  prop,
+  // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
   statements,
-  Text,
+  // Text,
 } from "../deps.ts";
-import {
-  canvasContext,
-  domElementIds,
-  functions,
-  state,
-} from "../variables.ts";
+import { domElementIds, Elements, functions, state } from "../variables.ts";
 
 export function defineGamePage() {
   return defineFunc(
@@ -24,49 +18,21 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          element("canvas", {
-            tagProps: {
-              id: domElementIds.canvas,
-              onpointermove: Text(pointerMoveHandler()),
-              onclick: Text(clickHandler()),
-            },
+          element(Elements.bigTitle, {
+            children: "GAME PAGE",
+            closed: true,
+          }),
+          element(Elements.button, {
+            tagProps: { onclick: execFunc(functions.goToMenuPage) },
+            closed: true,
+            children: "Back",
           }),
         ]),
-        assign(
-          state.gameState,
-          GameState.Play,
-        ),
-        canvasSetup(),
+        // assign(
+        //   state.gameState,
+        //   GameState.Play,
+        // ),
       ),
     },
   );
-}
-
-function canvasSetup() {
-  return statements(
-    assign(
-      prop(domElementIds.canvas, "width"),
-      state.canvas.width,
-    ),
-    assign(
-      prop(domElementIds.canvas, "height"),
-      state.canvas.height,
-    ),
-    assign(
-      canvasContext,
-      execFunc(prop(domElementIds.canvas, "getContext"), "2d", {
-        isTemplateLiteral: true,
-      }),
-    ),
-    assign(prop(canvasContext, "textAlign"), Text("center")),
-    assign(prop(canvasContext, "textBaseline"), Text("middle")),
-  );
-}
-
-function pointerMoveHandler(): string {
-  return dispatch(actions.setPointer(prop(INLINE_EVENT_ARG_NAME, "offsetY")));
-}
-
-function clickHandler(): string {
-  return dispatch(actions.firePlayerBullet());
 }

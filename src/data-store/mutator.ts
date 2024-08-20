@@ -21,189 +21,82 @@ import {
   statements,
   sub,
 } from "../deps.ts";
-import {
-  canPlayerMove,
-  doesTheBulletHitTheTarget,
-  shouldTheBulletBeKept,
-} from "../rules/game.ts";
 import { params, state } from "../variables.ts";
-import { GameState, State } from "./state.ts";
+import { State } from "./state.ts";
 
 enum ActionType {
-  SetTime,
-  SetPointer,
-  MoveTarget,
-  MovePlayer,
-  MoveBullets,
-  FirePlayerBullet,
-  CollideBullets,
-  ClearOutOfScreenBullets,
-  GameOver,
+  Draw,
+  Discard,
+  UseJoker,
+  BuyCard,
+  BuyPerk,
 }
 
 type Action<T = ActionType> =
   & ActionBase<T>
   & (
     | {
-      type: ActionType.SetTime;
-      payload: { time: string };
+      type: ActionType.Draw;
     }
     | {
-      type: ActionType.SetPointer;
-      payload: { y: string };
+      type: ActionType.Discard;
+      payload: { card: string };
     }
     | {
-      type: ActionType.MoveTarget;
+      type: ActionType.UseJoker;
+      payload: { joker: string };
     }
     | {
-      type: ActionType.MovePlayer;
+      type: ActionType.BuyCard;
+      payload: { card: string };
     }
     | {
-      type: ActionType.MoveBullets;
-    }
-    | {
-      type: ActionType.FirePlayerBullet;
-    }
-    | {
-      type: ActionType.CollideBullets;
-    }
-    | {
-      type: ActionType.ClearOutOfScreenBullets;
-    }
-    | {
-      type: ActionType.GameOver;
+      type: ActionType.BuyPerk;
+      payload: { perk: string };
     }
   );
 
 export const actions = {
-  setTime: (time: string): Action<ActionType.SetTime> => ({
-    type: ActionType.SetTime,
-    payload: { time },
+  draw: (): Action<ActionType.Draw> => ({
+    type: ActionType.Draw,
   }),
-  setPointer: (y: string): Action<ActionType.SetPointer> => ({
-    type: ActionType.SetPointer,
-    payload: { y },
+  discard: (card: string): Action<ActionType.Discard> => ({
+    type: ActionType.Discard,
+    payload: { card },
   }),
-  moveTarget: (): Action<ActionType.MoveTarget> => ({
-    type: ActionType.MoveTarget,
+  useJoker: (joker: string): Action<ActionType.UseJoker> => ({
+    type: ActionType.UseJoker,
+    payload: { joker },
   }),
-  movePlayer: (): Action<ActionType.MovePlayer> => ({
-    type: ActionType.MovePlayer,
+  buyCard: (card: string): Action<ActionType.BuyCard> => ({
+    type: ActionType.BuyCard,
+    payload: { card },
   }),
-  moveBullets: (): Action<ActionType.MoveBullets> => ({
-    type: ActionType.MoveBullets,
-  }),
-  firePlayerBullet: (): Action<ActionType.FirePlayerBullet> => ({
-    type: ActionType.FirePlayerBullet,
-  }),
-  collideBullets: (): Action<ActionType.CollideBullets> => ({
-    type: ActionType.CollideBullets,
-  }),
-  clearOutOfScreenBullets: (): Action<ActionType.ClearOutOfScreenBullets> => ({
-    type: ActionType.ClearOutOfScreenBullets,
-  }),
-  gameOver: (): Action<ActionType.GameOver> => ({
-    type: ActionType.GameOver,
+  buyPerk: (perk: string): Action<ActionType.BuyPerk> => ({
+    type: ActionType.BuyPerk,
+    payload: { perk },
   }),
 } as const;
 
 function mutator(state: State, action: Action): string {
   switch (action.type) {
-    case ActionType.SetTime: {
-      return assign(state.time, action.payload.time);
-    }
-    case ActionType.SetPointer: {
-      return assign(state.pointer.y, action.payload.y);
-    }
-    case ActionType.MoveTarget: {
-      return assign(
-        state.target.pos.y,
-        add(
-          div(state.canvas.height, 2),
-          mul(
-            div(state.canvas.height, 3),
-            execFunc(prop("Math", "sin"), div(state.time, config.target.speed)),
-          ),
-        ),
-      );
-    }
-    case ActionType.MovePlayer: {
-      return statements(
-        assign(
-          state.player.dir,
-          sub(state.pointer.y, state.player.pos.y),
-        ),
-        ifThen(
-          canPlayerMove(),
-          increment(
-            state.player.pos.y,
-            ifElse(
-              isGreater(state.player.dir, 0),
-              String(config.player.speed),
-              minus(config.player.speed),
-            ),
-          ),
-        ),
-      );
-    }
-    case ActionType.MoveBullets: {
+    case ActionType.Draw: {
       return execFunc(
-        prop(state.player.bullets, "forEach"),
-        defineFunc({
-          args: [params.item],
-          body: increment(prop(params.item, "x"), config.bullet.speed),
-          safe: false,
-        }),
+        prop(state.playerHandCards, "push"),
+        execFunc(prop(state.deckCards, "pop")),
       );
     }
-    case ActionType.FirePlayerBullet: {
-      return execFunc(
-        prop(state.player.bullets, "push"),
-        Record({
-          x: state.player.pos.x,
-          y: state.player.pos.y,
-        }),
-      );
+    case ActionType.Discard: {
+      return "TODO";
     }
-    case ActionType.CollideBullets: {
-      return execFunc(
-        prop(state.player.bullets, "forEach"),
-        defineFunc({
-          args: [params.item],
-          body: ifThen(
-            doesTheBulletHitTheTarget(params.item),
-            expressions(
-              assign(prop(params.item, "x"), state.canvas.width),
-              decrement(state.target.hp),
-              assign(
-                state.target.recoverTime,
-                add(state.time, config.target.recoverDelay),
-              ),
-            ),
-          ),
-          safe: false,
-        }),
-      );
+    case ActionType.UseJoker: {
+      return "TODO";
     }
-    case ActionType.ClearOutOfScreenBullets: {
-      return assign(
-        state.player.bullets,
-        execFunc(
-          prop(state.player.bullets, "filter"),
-          defineFunc({
-            args: [params.item],
-            body: shouldTheBulletBeKept(params.item),
-            safe: false,
-          }),
-        ),
-      );
+    case ActionType.BuyCard: {
+      return "TODO";
     }
-    case ActionType.GameOver: {
-      return statements(
-        assign(state.gameState, GameState.GameOver),
-        assign(state.target.hp, config.target.hp),
-        assign(state.player.bullets, List()),
-      );
+    case ActionType.BuyPerk: {
+      return "TODO";
     }
   }
 }

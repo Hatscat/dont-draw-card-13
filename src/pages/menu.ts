@@ -1,11 +1,11 @@
-import { element, setInnerHtml, Text } from "../deps.ts";
-import { assign, defineFunc, execFunc, prop, statements } from "../deps.ts";
+import { element, setInnerHtml } from "../deps.ts";
+import { defineFunc, execFunc, statements } from "../deps.ts";
 import { domElementIds, Elements, functions } from "../variables.ts";
 
-export function defineHomePage() {
+export function defineMenuPage() {
   return defineFunc(
     {
-      name: functions.goToHomePage,
+      name: functions.goToMenuPage,
       body: statements(
         setInnerHtml(
           domElementIds.page,
@@ -20,7 +20,7 @@ export function defineHomePage() {
               children: "Play",
             }),
             element(Elements.button, {
-              tagProps: { onclick: execFunc(functions.goToSettingsPage) },
+              tagProps: { onclick: execFunc(functions.goToPerksPage) },
               closed: true,
               children: "Perks",
             }),

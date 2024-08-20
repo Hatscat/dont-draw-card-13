@@ -8,14 +8,12 @@ import {
   viewportMeta,
 } from "./deps.ts";
 import { execFunc, statements } from "./deps.ts";
-import { headerElement } from "./elements/header.ts";
 import { defineGamePage } from "./pages/game.ts";
-import { defineHomePage } from "./pages/home.ts";
+import { defineMenuPage } from "./pages/menu.ts";
 import { domElementIds, Elements, functions, state } from "./variables.ts";
-import { defineSettingsPage } from "./pages/settings.ts";
+import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
-import { defineGameLoop } from "./game/game-loop.ts";
 
 export function getGameSrc(): SrcProps {
   return {
@@ -40,14 +38,15 @@ function getScript() {
     // Register the service worker
     registerServiceWorker(),
     // Declare functions
-    defineHomePage(),
-    defineSettingsPage(),
+    defineMenuPage(), // Menu
+    definePerksPage(), // Perks
     defineGamePage(),
+    // defineGameOverPage(), // ?
+    // shop will be a dialog, not a page
+
     // Init the state
     initVariables(state, initialState),
     // Render the Home page
-    execFunc(functions.goToHomePage),
-    // Start infinite game loop
-    execFunc(defineGameLoop()),
+    execFunc(functions.goToMenuPage),
   );
 }
