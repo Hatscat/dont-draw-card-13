@@ -1,6 +1,7 @@
 // import { actions, dispatch } from "../data-store/mutator.ts";
 // import { GameState } from "../data-store/state.ts";
-import { and } from "../deps.ts";
+import { actions, dispatch } from "../data-store/mutator.ts";
+import { and, prop } from "../deps.ts";
 import {
   assign,
   defineFunc,
@@ -23,6 +24,20 @@ export function defineGamePage() {
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
             children: "GAME PAGE", // "Don't draw card 13!", (to put in variables.ts)
+            closed: true,
+          }),
+          element(Elements.button, {
+            children: "Draw",
+            tagProps: {
+              onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
+            },
+            closed: true,
+          }),
+          element(Elements.button, {
+            children: "Card Shop",
+            tagProps: {
+              onclick: execFunc(prop("shopDialog", "showModal")),
+            },
             closed: true,
           }),
           element(Elements.button, {

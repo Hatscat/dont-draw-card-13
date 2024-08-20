@@ -9,6 +9,7 @@ import { List } from "../deps.ts";
 // }
 
 export const initialState = {
+  level: "1",
   playerHandCards: List(),
   deckCards: List(),
   discardedCards: List(),
