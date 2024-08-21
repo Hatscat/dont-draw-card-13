@@ -14,7 +14,13 @@ import {
   Text,
   // Text,
 } from "../deps.ts";
-import { domElementIds, Elements, functions, state } from "../variables.ts";
+import {
+  domElementIds,
+  Elements,
+  functions,
+  state,
+  texts,
+} from "../variables.ts";
 
 export function defineGamePage() {
   return defineFunc(
@@ -23,7 +29,11 @@ export function defineGamePage() {
       body: statements(
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
-            children: "GAME PAGE", // "Don't draw card 13!", (to put in variables.ts)
+            children: texts.gameTitle,
+            closed: true,
+          }),
+          element(Elements.flexWithoutStyle, {
+            children: `Level ${state.level}`,
             closed: true,
           }),
           element(Elements.button, {
@@ -49,6 +59,11 @@ export function defineGamePage() {
             },
             children: "Give up",
             closed: true,
+          }),
+          element(Elements.playerHand, {
+            tagProps: {
+              id: domElementIds.playerHand,
+            },
           }),
         ]),
       ),

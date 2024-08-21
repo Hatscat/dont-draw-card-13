@@ -1,6 +1,6 @@
 import { element, setInnerHtml } from "../deps.ts";
 import { defineFunc, execFunc, statements } from "../deps.ts";
-import { domElementIds, Elements, functions } from "../variables.ts";
+import { domElementIds, Elements, functions, texts } from "../variables.ts";
 
 export function defineMenuPage() {
   return defineFunc(
@@ -11,7 +11,7 @@ export function defineMenuPage() {
           domElementIds.page,
           [
             element(Elements.bigTitle, {
-              children: "Don't draw card 13!",
+              children: texts.gameTitle,
               closed: true,
             }),
             element(Elements.button, {
