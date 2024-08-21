@@ -8,7 +8,7 @@ export function defineGameOverPage() {
       name: functions.goToGameOverPage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          element(Elements.bigTitle, {
+          element(Elements.subTitle, {
             children: "Game Over",
             closed: true,
           }),

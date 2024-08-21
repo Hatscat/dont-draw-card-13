@@ -22,8 +22,13 @@ export function getStylesheet() {
       background: "#444",
     },
     [Elements.bigTitle]: {
-      fontSize: 80,
-      padding: 32,
+      fontSize: 64,
+      padding: 16,
+      textAlign: "center",
+    },
+    [Elements.subTitle]: {
+      fontSize: 56,
+      padding: 16,
     },
     [Elements.interactive]: {
       cursor: "pointer",

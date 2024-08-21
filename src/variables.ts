@@ -14,14 +14,13 @@ export const { state, functions, domElementIds, params, texts } =
       domElementIds: {
         page: "",
         playerHand: "",
+        levelCounter: "",
       },
       params: {
         time: "",
         item: "",
       },
-      texts: {
-        gameTitle: "", // "Don't draw card 13!"
-      },
+      texts: {},
     } as const,
   );
 
@@ -30,6 +29,7 @@ export const Elements = {
   page: "b",
   flexWithoutStyle: "z",
   interactive: "v",
-  bigTitle: "t",
+  bigTitle: "h1",
+  subTitle: "t",
   playerHand: "x",
 } as const;

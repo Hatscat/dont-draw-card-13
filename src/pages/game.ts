@@ -3,6 +3,7 @@
 import { actions, dispatch } from "../data-store/mutator.ts";
 import { and, prop } from "../deps.ts";
 import {
+  add,
   assign,
   defineFunc,
   element,
@@ -12,15 +13,8 @@ import {
   setInnerHtml,
   statements,
   Text,
-  // Text,
 } from "../deps.ts";
-import {
-  domElementIds,
-  Elements,
-  functions,
-  state,
-  texts,
-} from "../variables.ts";
+import { domElementIds, Elements, functions, state } from "../variables.ts";
 
 export function defineGamePage() {
   return defineFunc(
@@ -28,12 +22,10 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          element(Elements.bigTitle, {
-            children: texts.gameTitle,
-            closed: true,
-          }),
           element(Elements.flexWithoutStyle, {
-            children: `Level ${state.level}`,
+            tagProps: {
+              id: domElementIds.levelCounter,
+            },
             closed: true,
           }),
           element(Elements.button, {
@@ -66,6 +58,10 @@ export function defineGamePage() {
             },
           }),
         ]),
+        assign(
+          prop(domElementIds.levelCounter, "innerHTML"),
+          add(Text("Level "), state.level),
+        ), // TODO: set in actions!
       ),
     },
   );
