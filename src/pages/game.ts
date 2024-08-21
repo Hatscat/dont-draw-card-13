@@ -59,10 +59,7 @@ export function defineGamePage() {
             },
           }),
         ]),
-        assign(
-          prop(domElementIds.levelCounter, "innerHTML"),
-          add(Text("Level "), state.level),
-        ), // TODO: set in actions!
+        execFunc(functions.refreshLevelCounter),
       ),
     },
   );

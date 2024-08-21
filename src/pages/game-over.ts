@@ -12,12 +12,19 @@ export function defineGameOverPage() {
             children: "Game Over",
             closed: true,
           }),
+          element(Elements.flexWithoutStyle, {
+            tagProps: {
+              id: domElementIds.levelCounter,
+            },
+            closed: true,
+          }),
           element(Elements.button, {
             tagProps: { onclick: execFunc(functions.goToPerksPage) },
             children: "Continue",
             closed: true,
           }),
         ]),
+        execFunc(functions.refreshLevelCounter),
       ),
     },
   );

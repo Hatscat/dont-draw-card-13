@@ -10,6 +10,7 @@ export const { state, functions, domElementIds, params, texts } =
         goToGamePage: "",
         goToPerksPage: "",
         goToGameOverPage: "",
+        refreshLevelCounter: "",
       },
       domElementIds: {
         page: "",

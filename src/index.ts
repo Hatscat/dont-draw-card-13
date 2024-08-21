@@ -15,6 +15,7 @@ import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
+import { defineLevelCounterRefresh } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
   return {
@@ -43,6 +44,7 @@ function getScript() {
     definePerksPage(),
     defineGamePage(),
     defineGameOverPage(),
+    defineLevelCounterRefresh(),
     // shop will be a dialog, not a page
 
     // Init the state
