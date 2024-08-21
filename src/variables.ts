@@ -31,5 +31,9 @@ export const Elements = {
   flexWithoutStyle: "z",
   interactive: "v",
   bigTitle: "h1",
-  playerHand: "x",
+  card: "c",
+  // unique elements:
+  // playerHand: "x",
+  // deck: "d",
+  // cardShopDialog: "s",
 } as const;

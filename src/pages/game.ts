@@ -1,17 +1,17 @@
 import { actions, dispatch } from "../data-store/mutator.ts";
-import { and, prop } from "../deps.ts";
 import {
-  add,
-  assign,
+  and,
   defineFunc,
   element,
   execFunc,
+  formatStyle,
+  prop,
   // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
   statements,
   Text,
 } from "../deps.ts";
-import { domElementIds, Elements, functions, state } from "../variables.ts";
+import { domElementIds, Elements, functions } from "../variables.ts";
 
 export function defineGamePage() {
   return defineFunc(
@@ -23,37 +23,57 @@ export function defineGamePage() {
             children: "Don't draw card 13!",
             closed: true,
           }),
+
           element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.levelCounter,
             },
             closed: true,
           }),
-          element(Elements.button, {
-            children: "Draw",
+
+          element(Elements.flexWithoutStyle, {
             tagProps: {
-              onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
+              style: formatStyle({
+                width: "99%",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }),
             },
+            children: [
+              element(Elements.button, {
+                children: "Card Shop",
+                tagProps: {
+                  onclick: execFunc(prop("shopDialog", "showModal")),
+                },
+                closed: true,
+              }),
+
+              element(Elements.interactive, {
+                children: "Draw",
+                tagProps: {
+                  style: formatStyle({
+                    flex: 1,
+                  }),
+                  onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
+                },
+                closed: true,
+              }),
+
+              element(Elements.button, {
+                tagProps: {
+                  onclick: Text(and(
+                    execFunc("confirm", Text("Give up this game?")),
+                    execFunc(functions.goToGameOverPage),
+                  )),
+                },
+                children: "Give up",
+                closed: true,
+              }),
+            ],
             closed: true,
           }),
-          element(Elements.button, {
-            children: "Card Shop",
-            tagProps: {
-              onclick: execFunc(prop("shopDialog", "showModal")),
-            },
-            closed: true,
-          }),
-          element(Elements.button, {
-            tagProps: {
-              onclick: Text(and(
-                execFunc("confirm", Text("Give up this game?")),
-                execFunc(functions.goToGameOverPage),
-              )),
-            },
-            children: "Give up",
-            closed: true,
-          }),
-          element(Elements.playerHand, {
+
+          element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.playerHand,
             },

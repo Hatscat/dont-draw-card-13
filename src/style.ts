@@ -12,7 +12,7 @@ export function getStylesheet() {
       background: "#333",
       justifyContent: "center",
       fontSize: 24,
-      width: 256,
+      width: "33%",
       padding: "16 0",
       margin: 16,
       borderRadius: "8px",
