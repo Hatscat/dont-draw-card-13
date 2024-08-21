@@ -24,11 +24,6 @@ export function getStylesheet() {
     [Elements.bigTitle]: {
       fontSize: 64,
       padding: 16,
-      textAlign: "center",
-    },
-    [Elements.subTitle]: {
-      fontSize: 56,
-      padding: 16,
     },
     [Elements.interactive]: {
       cursor: "pointer",

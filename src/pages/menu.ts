@@ -1,4 +1,4 @@
-import { element, setInnerHtml } from "../deps.ts";
+import { element, formatStyle, setInnerHtml } from "../deps.ts";
 import { defineFunc, execFunc, statements } from "../deps.ts";
 import { domElementIds, Elements, functions } from "../variables.ts";
 
@@ -10,6 +10,11 @@ export function defineMenuPage() {
         setInnerHtml(
           domElementIds.page,
           [
+            element(Elements.bigTitle, {
+              children: "🃏",
+              tagProps: { style: formatStyle({ fontSize: 256 }) },
+              closed: true,
+            }),
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToGamePage) },
               children: "Play",

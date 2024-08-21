@@ -30,6 +30,5 @@ export const Elements = {
   flexWithoutStyle: "z",
   interactive: "v",
   bigTitle: "h1",
-  subTitle: "t",
   playerHand: "x",
 } as const;

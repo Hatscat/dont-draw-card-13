@@ -1,5 +1,3 @@
-// import { actions, dispatch } from "../data-store/mutator.ts";
-// import { GameState } from "../data-store/state.ts";
 import { actions, dispatch } from "../data-store/mutator.ts";
 import { and, prop } from "../deps.ts";
 import {
@@ -8,7 +6,6 @@ import {
   defineFunc,
   element,
   execFunc,
-  ifThen,
   // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
   statements,
@@ -22,6 +19,10 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
+          element(Elements.bigTitle, {
+            children: "Don't draw card 13!",
+            closed: true,
+          }),
           element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.levelCounter,

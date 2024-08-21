@@ -8,7 +8,7 @@ export function definePerksPage() {
       name: functions.goToPerksPage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          element(Elements.subTitle, {
+          element(Elements.bigTitle, {
             children: "Perks",
             closed: true,
           }),

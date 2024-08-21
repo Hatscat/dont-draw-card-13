@@ -28,10 +28,6 @@ export function getGameSrc(): SrcProps {
         manifestLink(),
       ],
       body: [
-        element(Elements.bigTitle, {
-          children: "Don't draw card 13!",
-          closed: true,
-        }),
         element(Elements.page, { tagProps: { id: domElementIds.page } }),
       ],
     },
