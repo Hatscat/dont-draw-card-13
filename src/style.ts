@@ -3,18 +3,16 @@ import { formatStylesheet } from "./deps.ts";
 
 export function getStylesheet() {
   return formatStylesheet({
-    "body": { background: "#111" },
-    "body *": {
+    body: { background: "#111" },
+    [list(Elements.page, `${Elements.page} *`)]: {
       color: "#EEE",
       fontFamily: "monospace",
-      display: "flex",
       fontSize: 24,
+      display: "flex",
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
-    },
-    [list(Elements.page, Elements.button, id(domElementIds.cardShopDialog))]: {
-      flexDirection: "column",
     },
     [directChildren(Elements.page)]: {
       minWidth: 256,
@@ -33,7 +31,6 @@ export function getStylesheet() {
     },
     [Elements.bigTitle]: {
       fontSize: 64,
-      // padding: 16,
       margin: 24,
     },
     [id(domElementIds.cardShopDialog)]: {

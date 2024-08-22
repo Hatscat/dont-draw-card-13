@@ -37,8 +37,7 @@ export function defineGamePage() {
                 width: "99%",
                 flexDirection: "row",
                 justifyContent: "space-around",
-                alignItems: "start", // TODO: to decide
-                // margin: 64,
+                alignItems: "start",
               }),
             },
             children: [
@@ -65,8 +64,16 @@ export function defineGamePage() {
                 children: "Draw",
                 tagProps: {
                   id: domElementIds.deck,
-                  style: formatStyle({
+                  style: formatStyle({ // TODO: move to CSS
                     // flex: 1,
+                    // border: "1px solid white",
+                    borderRadius: "16px",
+                    background: "#666",
+                    height: 320,
+                    width: 256,
+                    // padding: 24,
+                    // margin: 24,
+                    transition: "all 0.6s ease",
                   }),
                   onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
                 },
@@ -81,7 +88,6 @@ export function defineGamePage() {
                     execFunc(functions.goToGameOverPage),
                   )),
                 },
-                // children: "<br>Give up<p>❌</p>",
                 children: "❌ Give up",
                 closed: true,
               }),

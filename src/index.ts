@@ -33,7 +33,10 @@ export function getGameSrc(): SrcProps {
         manifestLink(), // TODO: useful for JS13K?
       ],
       body: [
-        element(Elements.page, { tagProps: { id: domElementIds.page } }),
+        element(Elements.page, {
+          tagProps: { id: domElementIds.page },
+          closed: true,
+        }),
       ],
     },
   };
