@@ -35,7 +35,6 @@ export function getGameSrc(): SrcProps {
       body: [
         element(Elements.page, {
           tagProps: { id: domElementIds.page },
-          closed: true,
         }),
       ],
     },

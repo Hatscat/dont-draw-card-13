@@ -13,16 +13,15 @@ export function defineMenuPage() {
             element(Elements.bigTitle, {
               children: "🃏",
               tagProps: { style: formatStyle({ fontSize: 256 }) },
-              closed: true,
             }),
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToGamePage) },
               children: "Play",
-              closed: true,
             }),
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToPerksPage) },
               children: "Perks",
+              closed: false,
             }),
           ],
         ),

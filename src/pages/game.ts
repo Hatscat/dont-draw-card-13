@@ -21,14 +21,12 @@ export function defineGamePage() {
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
             children: "Don't draw card 13!",
-            closed: true,
           }),
 
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.levelCounter,
             },
-            closed: true,
           }),
 
           element(Elements.flexWithoutStyle, {
@@ -48,7 +46,6 @@ export function defineGamePage() {
                     tagProps: {
                       id: domElementIds.gameMoneyCounter,
                     },
-                    closed: true,
                   }),
                 ],
                 tagProps: {
@@ -57,7 +54,6 @@ export function defineGamePage() {
                     prop(domElementIds.cardShopDialog, "showModal"),
                   ),
                 },
-                closed: true,
               }),
 
               element(Elements.interactive, {
@@ -77,7 +73,6 @@ export function defineGamePage() {
                   }),
                   onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
                 },
-                closed: true,
               }),
 
               element(Elements.button, {
@@ -89,17 +84,14 @@ export function defineGamePage() {
                   )),
                 },
                 children: "❌ Give up",
-                closed: true,
               }),
             ],
-            closed: true,
           }),
 
           element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.playerHand,
             },
-            closed: true,
           }),
 
           element("dialog", {
@@ -109,20 +101,17 @@ export function defineGamePage() {
             children: [
               element(Elements.bigTitle, {
                 children: "Card Shop",
-                closed: true,
               }),
               element(Elements.paragraph, {
                 tagProps: {
                   id: domElementIds.shopMoneyCounter,
                 },
-                closed: true,
               }),
               element(Elements.card, {
                 children: "🃏",
                 tagProps: {
                   onclick: dispatch(actions.buyCard("A1")),
                 },
-                closed: true,
               }),
               element(Elements.button, {
                 children: "Close",
@@ -132,10 +121,8 @@ export function defineGamePage() {
                     prop(domElementIds.cardShopDialog, "close"),
                   ),
                 },
-                closed: true,
               }),
             ],
-            closed: true,
           }),
         ]),
         execFunc(functions.refreshLevelCounter),

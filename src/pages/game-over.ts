@@ -10,24 +10,21 @@ export function defineGameOverPage() {
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
             children: "Game Over",
-            closed: true,
           }),
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.levelCounter,
             },
-            closed: true,
           }),
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.perkPointsCounter,
             },
-            closed: true,
           }),
           element(Elements.button, {
             tagProps: { onclick: execFunc(functions.goToPerksPage) },
             children: "Continue",
-            closed: true,
+            closed: false,
           }),
         ]),
         execFunc(functions.refreshLevelCounter),

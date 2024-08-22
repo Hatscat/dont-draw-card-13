@@ -10,17 +10,16 @@ export function definePerksPage() {
         setInnerHtml(domElementIds.page, [
           element(Elements.bigTitle, {
             children: "Perks",
-            closed: true,
           }),
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.perkPointsCounter,
             },
-            closed: true,
           }),
           element(Elements.button, {
             tagProps: { onclick: execFunc(functions.goToMenuPage) },
             children: "Continue",
+            closed: false,
           }),
         ]),
         execFunc(functions.refreshPerkPointsCounter),
