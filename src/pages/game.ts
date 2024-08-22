@@ -24,7 +24,7 @@ export function defineGamePage() {
             closed: true,
           }),
 
-          element(Elements.flexWithoutStyle, {
+          element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.levelCounter,
             },
@@ -37,14 +37,26 @@ export function defineGamePage() {
                 width: "99%",
                 flexDirection: "row",
                 justifyContent: "space-around",
+                alignItems: "start", // TODO: to decide
+                // margin: 64,
               }),
             },
             children: [
               element(Elements.button, {
-                children: "♥️ ♦️ ♠️ ♣️<br>Card Shop",
+                children: [
+                  "<br>Card Shop",
+                  element(Elements.paragraph, {
+                    tagProps: {
+                      id: domElementIds.gameMoneyCounter,
+                    },
+                    closed: true,
+                  }),
+                ],
                 tagProps: {
                   id: domElementIds.cardShopButton,
-                  onclick: execFunc(prop("shopDialog", "showModal")),
+                  onclick: execFunc(
+                    prop(domElementIds.cardShopDialog, "showModal"),
+                  ),
                 },
                 closed: true,
               }),
@@ -69,7 +81,8 @@ export function defineGamePage() {
                     execFunc(functions.goToGameOverPage),
                   )),
                 },
-                children: "❌<br>Give up",
+                // children: "<br>Give up<p>❌</p>",
+                children: "❌ Give up",
                 closed: true,
               }),
             ],
@@ -80,9 +93,47 @@ export function defineGamePage() {
             tagProps: {
               id: domElementIds.playerHand,
             },
+            closed: true,
+          }),
+
+          element("dialog", {
+            tagProps: {
+              id: domElementIds.cardShopDialog,
+            },
+            children: [
+              element(Elements.bigTitle, {
+                children: "Card Shop",
+                closed: true,
+              }),
+              element(Elements.paragraph, {
+                tagProps: {
+                  id: domElementIds.shopMoneyCounter,
+                },
+                closed: true,
+              }),
+              element(Elements.card, {
+                children: "🃏",
+                tagProps: {
+                  onclick: dispatch(actions.buyCard("A1")),
+                },
+                closed: true,
+              }),
+              element(Elements.button, {
+                children: "Close",
+                tagProps: {
+                  autofocus: "",
+                  onclick: execFunc(
+                    prop(domElementIds.cardShopDialog, "close"),
+                  ),
+                },
+                closed: true,
+              }),
+            ],
+            closed: true,
           }),
         ]),
         execFunc(functions.refreshLevelCounter),
+        execFunc(functions.refreshMoneyCounters),
       ),
     },
   );

@@ -12,9 +12,15 @@ export function defineGameOverPage() {
             children: "Game Over",
             closed: true,
           }),
-          element(Elements.flexWithoutStyle, {
+          element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.levelCounter,
+            },
+            closed: true,
+          }),
+          element(Elements.paragraph, {
+            tagProps: {
+              id: domElementIds.perkPointsCounter,
             },
             closed: true,
           }),
@@ -25,6 +31,7 @@ export function defineGameOverPage() {
           }),
         ]),
         execFunc(functions.refreshLevelCounter),
+        execFunc(functions.refreshPerkPointsCounter),
       ),
     },
   );

@@ -12,3 +12,30 @@ export function defineLevelCounterRefresh() {
     },
   );
 }
+
+export function definePerkPointsCounterRefresh() {
+  return defineFunc(
+    {
+      name: functions.refreshPerkPointsCounter,
+      body: assign(
+        prop(domElementIds.perkPointsCounter, "innerHTML"),
+        add(Text("⭐️ "), state.perkPoints),
+      ),
+    },
+  );
+}
+
+export function defineMoneyCountersRefresh() {
+  return defineFunc(
+    {
+      name: functions.refreshMoneyCounters,
+      body: assign(
+        prop(domElementIds.shopMoneyCounter, "innerHTML"),
+        assign(
+          prop(domElementIds.gameMoneyCounter, "innerHTML"),
+          add(Text("💰 "), state.money),
+        ),
+      ),
+    },
+  );
+}

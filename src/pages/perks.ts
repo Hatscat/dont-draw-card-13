@@ -12,12 +12,18 @@ export function definePerksPage() {
             children: "Perks",
             closed: true,
           }),
+          element(Elements.paragraph, {
+            tagProps: {
+              id: domElementIds.perkPointsCounter,
+            },
+            closed: true,
+          }),
           element(Elements.button, {
             tagProps: { onclick: execFunc(functions.goToMenuPage) },
             children: "Continue",
-            closed: true,
           }),
         ]),
+        execFunc(functions.refreshPerkPointsCounter),
       ),
     },
   );

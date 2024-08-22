@@ -5,7 +5,6 @@ export function getStylesheet() {
   return formatStylesheet({
     "body": { background: "#111" },
     "body *": {
-      margin: 0,
       color: "#EEE",
       fontFamily: "monospace",
       display: "flex",
@@ -14,7 +13,7 @@ export function getStylesheet() {
       justifyContent: "center",
       textAlign: "center",
     },
-    [Elements.page]: {
+    [list(Elements.page, Elements.button, id(domElementIds.cardShopDialog))]: {
       flexDirection: "column",
     },
     [directChildren(Elements.page)]: {
@@ -27,7 +26,6 @@ export function getStylesheet() {
       background: "#333",
       padding: 24,
       margin: 24,
-      // borderRadius: "8px",
       transition: "all 0.6s ease",
     },
     [hover(Elements.button)]: {
@@ -35,7 +33,18 @@ export function getStylesheet() {
     },
     [Elements.bigTitle]: {
       fontSize: 64,
-      padding: 16,
+      // padding: 16,
+      margin: 24,
+    },
+    [id(domElementIds.cardShopDialog)]: {
+      display: "none",
+    },
+    [`${id(domElementIds.cardShopDialog)}[open]`]: {
+      display: "flex",
+      background: "#000",
+    },
+    ["::backdrop"]: {
+      background: "#7777",
     },
   });
 }

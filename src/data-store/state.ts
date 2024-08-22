@@ -10,11 +10,12 @@ import { List } from "../deps.ts";
 
 export const initialState = {
   level: "1",
+  money: "0",
+  perkPoints: "0",
+  perks: List(),
   playerHandCards: List(),
   deckCards: List(),
   discardedCards: List(),
-  money: "0",
-  perkPoints: "0",
   boss: {
     text: "0",
     targetElement: "0",

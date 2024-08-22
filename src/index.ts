@@ -15,7 +15,11 @@ import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
-import { defineLevelCounterRefresh } from "./elements/updates.ts";
+import {
+  defineLevelCounterRefresh,
+  defineMoneyCountersRefresh,
+  definePerkPointsCounterRefresh,
+} from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
   return {
@@ -24,9 +28,9 @@ export function getGameSrc(): SrcProps {
     html: {
       head: [
         // htmlDoctype(), // The DOCTYPE breaks the CSS sizes without unit
-        titleTag("🃏"), // useful for JS13K?
+        titleTag("🃏"), // TODO: useful for JS13K?
         viewportMeta(), // TODO: set to landscape for mobile?
-        manifestLink(), // useful for JS13K?
+        manifestLink(), // TODO: useful for JS13K?
       ],
       body: [
         element(Elements.page, { tagProps: { id: domElementIds.page } }),
@@ -38,15 +42,15 @@ export function getGameSrc(): SrcProps {
 function getScript() {
   return statements(
     // Register the service worker
-    registerServiceWorker(), // useful for JS13K?
+    registerServiceWorker(), // TODO: useful for JS13K?
     // Declare functions
     defineMenuPage(),
     definePerksPage(),
     defineGamePage(),
     defineGameOverPage(),
     defineLevelCounterRefresh(),
-    // shop will be a dialog, not a page
-
+    definePerkPointsCounterRefresh(),
+    defineMoneyCountersRefresh(),
     // Init the state
     initVariables(state, initialState),
     // Render the Home page
