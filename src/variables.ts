@@ -16,6 +16,10 @@ export const { state, functions, domElementIds, params, texts } =
         page: "",
         playerHand: "",
         levelCounter: "",
+        deck: "",
+        giveUpButton: "",
+        cardShopButton: "",
+        // cardShopDialog: "",
       },
       params: {
         time: "",
@@ -32,8 +36,4 @@ export const Elements = {
   interactive: "v",
   bigTitle: "h1",
   card: "c",
-  // unique elements:
-  // playerHand: "x",
-  // deck: "d",
-  // cardShopDialog: "s",
 } as const;

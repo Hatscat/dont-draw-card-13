@@ -7,31 +7,46 @@ export function getStylesheet() {
     "body": { background: "#111", overflow: "hidden" },
     [`${Elements.page} *`]: {
       display: "flex",
-    },
-    [Elements.button]: {
-      background: "#333",
-      justifyContent: "center",
       fontSize: 24,
-      width: "33%",
-      padding: "16 0",
-      margin: 16,
-      borderRadius: "8px",
-      cursor: "pointer",
     },
-    [`${Elements.button}:hover`]: {
-      background: "#444",
-    },
-    [Elements.bigTitle]: {
-      fontSize: 64,
-      padding: 16,
-    },
-    [Elements.interactive]: {
-      cursor: "pointer",
-    },
-    [`#${domElementIds.page}`]: {
+    [Elements.page]: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
     },
+    [list(Elements.interactive, Elements.button)]: {
+      cursor: "pointer",
+    },
+    [Elements.button]: {
+      background: "#333",
+      justifyContent: "center",
+      width: 256,
+      padding: "16 0",
+      margin: 16,
+      borderRadius: "8px",
+    },
+    [hover(Elements.button)]: {
+      background: "#444",
+    },
+    // [list(id(domElementIds.cardShopButton), id(domElementIds.giveUpButton))]: {
+    //   width: 128,
+    //   height: 128,
+    // },
+    [Elements.bigTitle]: {
+      fontSize: 64,
+      padding: 16,
+    },
   });
+}
+
+function id(id: string) {
+  return `#${id}`;
+}
+
+function list(...selectors: string[]) {
+  return selectors.join(",");
+}
+
+function hover(selector: string) {
+  return `${selector}:hover`;
 }

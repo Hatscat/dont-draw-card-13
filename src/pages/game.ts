@@ -41,8 +41,9 @@ export function defineGamePage() {
             },
             children: [
               element(Elements.button, {
-                children: "Card Shop",
+                children: "♥️ ♦️ ♠️ ♣️<br>Card Shop",
                 tagProps: {
+                  id: domElementIds.cardShopButton,
                   onclick: execFunc(prop("shopDialog", "showModal")),
                 },
                 closed: true,
@@ -51,8 +52,9 @@ export function defineGamePage() {
               element(Elements.interactive, {
                 children: "Draw",
                 tagProps: {
+                  id: domElementIds.deck,
                   style: formatStyle({
-                    flex: 1,
+                    // flex: 1,
                   }),
                   onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
                 },
@@ -61,12 +63,13 @@ export function defineGamePage() {
 
               element(Elements.button, {
                 tagProps: {
+                  id: domElementIds.giveUpButton,
                   onclick: Text(and(
                     execFunc("confirm", Text("Give up this game?")),
                     execFunc(functions.goToGameOverPage),
                   )),
                 },
-                children: "Give up",
+                children: "❌<br>Give up",
                 closed: true,
               }),
             ],
