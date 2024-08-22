@@ -1,25 +1,14 @@
 {
-  "name": "PWA Game Template",
-  "short_name": "Template",
-  "description": "A demonstrative game.",
+  "name": "Don't draw card 13!",
+  "short_name": "🃏",
+  "description": "A JS13k game entry.",
   "theme_color": "#000",
   "background_color": "#111",
   "display": "fullscreen",
   "icons": [
     {
-      "src": "icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "icons/c.svg",
+      "sizes": "any"
     }
   ],
   "start_url": "/index.html"

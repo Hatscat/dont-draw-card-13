@@ -24,9 +24,9 @@ export function getGameSrc(): SrcProps {
     html: {
       head: [
         // htmlDoctype(), // The DOCTYPE breaks the CSS sizes without unit
-        titleTag("🃏"),
-        viewportMeta(),
-        manifestLink(),
+        titleTag("🃏"), // useful for JS13K?
+        viewportMeta(), // TODO: set to landscape for mobile?
+        manifestLink(), // useful for JS13K?
       ],
       body: [
         element(Elements.page, { tagProps: { id: domElementIds.page } }),
@@ -38,7 +38,7 @@ export function getGameSrc(): SrcProps {
 function getScript() {
   return statements(
     // Register the service worker
-    registerServiceWorker(),
+    registerServiceWorker(), // useful for JS13K?
     // Declare functions
     defineMenuPage(),
     definePerksPage(),
