@@ -23,7 +23,6 @@ export function defineMenuPage() {
             element(Elements.button, {
               tagProps: { onclick: execFunc(functions.goToPerksPage) },
               children: "Perks",
-              closed: true,
             }),
           ],
         ),
