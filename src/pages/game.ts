@@ -59,6 +59,7 @@ export function defineGamePage() {
                 width: "100%",
                 flexDirection: "row",
                 justifyContent: "space-evenly",
+                gap: "8px",
                 alignItems: "start",
               }),
             },
@@ -92,9 +93,6 @@ export function defineGamePage() {
               element(Elements.flexWithoutStyle, {
                 tagProps: {
                   id: domElementIds.discardPile,
-                  style: formatStyle({
-                    alignSelf: "flex-end",
-                  }),
                 },
                 children: "Discard<br>Pile",
               }),

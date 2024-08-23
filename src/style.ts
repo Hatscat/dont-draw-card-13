@@ -24,7 +24,6 @@ export function getStylesheet() {
     [Elements.button]: {
       background: "#333",
       padding: 16,
-      margin: 8,
     },
     [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
@@ -53,6 +52,7 @@ export function getStylesheet() {
       width: 256,
     },
     [id(domElementIds.discardPile)]: {
+      alignSelf: "flex-end",
       borderRadius: "16px",
       border: "4px dashed #CCC",
       height: 192,
