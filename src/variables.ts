@@ -22,6 +22,7 @@ export const { state, functions, domElementIds, params, texts } =
         gameMoneyCounter: "",
         shopMoneyCounter: "",
         deck: "",
+        discardPile: "",
         giveUpButton: "",
         cardShopButton: "",
         cardShopDialog: "",

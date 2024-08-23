@@ -19,13 +19,19 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
+          // Title
           element(Elements.bigTitle, {
             children: "Don't draw card 13!",
           }),
 
+          // Level counter and give up button
           element(Elements.paragraph, {
             tagProps: {
-              style: formatStyle({ flexDirection: "row", marginBottom: 32 }),
+              style: formatStyle({
+                flexDirection: "row",
+                marginBottom: 32,
+                gap: "24px",
+              }),
             },
             children: [
               element(Elements.flexWithoutStyle, {
@@ -46,37 +52,18 @@ export function defineGamePage() {
             ],
           }),
 
+          // Game area
           element(Elements.flexWithoutStyle, {
             tagProps: {
               style: formatStyle({
                 width: "100%",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-evenly",
                 alignItems: "start",
               }),
             },
             children: [
-              element(Elements.paragraph, {}),
-
-              element(Elements.interactive, {
-                children: "Draw",
-                tagProps: {
-                  id: domElementIds.deck,
-                  style: formatStyle({ // TODO: move to CSS
-                    // flex: 1,
-                    // border: "1px solid white",
-                    borderRadius: "16px",
-                    background: "#666",
-                    height: 320,
-                    width: 256,
-                    // padding: 24,
-                    // margin: 24,
-                    transition: "all 0.6s ease",
-                  }),
-                  onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
-                },
-              }),
-
+              // Card shop button
               element(Elements.button, {
                 children: [
                   "<br>Card Shop",
@@ -93,15 +80,35 @@ export function defineGamePage() {
                   ),
                 },
               }),
+              // Deck
+              element(Elements.interactive, {
+                children: "Draw",
+                tagProps: {
+                  id: domElementIds.deck,
+                  onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
+                },
+              }),
+              // Discard pile
+              element(Elements.flexWithoutStyle, {
+                tagProps: {
+                  id: domElementIds.discardPile,
+                  style: formatStyle({
+                    alignSelf: "flex-end",
+                  }),
+                },
+                children: "Discard<br>Pile",
+              }),
             ],
           }),
 
+          // Player hand
           element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.playerHand,
             },
           }),
 
+          // Card shop dialog
           element("dialog", {
             tagProps: {
               id: domElementIds.cardShopDialog,
@@ -126,6 +133,7 @@ export function defineGamePage() {
             ],
           }),
         ]),
+        // refresh counters
         execFunc(functions.refreshLevelCounter),
         execFunc(functions.refreshMoneyCounters),
       ),

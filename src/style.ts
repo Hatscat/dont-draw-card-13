@@ -13,6 +13,7 @@ export function getStylesheet() {
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
+      transition: "all 0.6s ease",
     },
     [directChildren(Elements.page)]: {
       minWidth: 256,
@@ -24,9 +25,8 @@ export function getStylesheet() {
       background: "#333",
       padding: 16,
       margin: 8,
-      transition: "all 0.6s ease",
     },
-    [hover(Elements.button)]: {
+    [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
     },
     [Elements.bigTitle]: {
@@ -42,6 +42,19 @@ export function getStylesheet() {
     },
     ["::backdrop"]: {
       background: "#7777",
+    },
+    [id(domElementIds.deck)]: {
+      borderRadius: "24px",
+      background: "#1EE",
+      color: "#000",
+      height: 384,
+      width: 256,
+    },
+    [id(domElementIds.discardPile)]: {
+      borderRadius: "16px",
+      border: "4px dashed #CCC",
+      height: 192,
+      width: 128,
     },
   });
 }
