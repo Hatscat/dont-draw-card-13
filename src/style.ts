@@ -47,6 +47,8 @@ export function getStylesheet() {
       borderRadius: "24px",
       background: "#1EE",
       color: "#000",
+      outline: "2px double #000",
+      boxShadow: "0 0 4px 4px #188",
       height: 384,
       width: 256,
     },
