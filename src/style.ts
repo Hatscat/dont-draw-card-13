@@ -7,7 +7,7 @@ export function getStylesheet() {
     [list(Elements.page, `${Elements.page} *`)]: {
       color: "#EEE",
       fontFamily: "monospace",
-      fontSize: 24,
+      fontSize: 16,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -22,16 +22,16 @@ export function getStylesheet() {
     },
     [Elements.button]: {
       background: "#333",
-      padding: 24,
-      margin: 24,
+      padding: 16,
+      margin: 8,
       transition: "all 0.6s ease",
     },
     [hover(Elements.button)]: {
       filter: "invert(1)",
     },
     [Elements.bigTitle]: {
-      fontSize: 64,
-      margin: 24,
+      fontSize: 48,
+      margin: 16,
     },
     [id(domElementIds.cardShopDialog)]: {
       display: "none",

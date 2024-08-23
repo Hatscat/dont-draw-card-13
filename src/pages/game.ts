@@ -25,36 +25,38 @@ export function defineGamePage() {
 
           element(Elements.paragraph, {
             tagProps: {
-              id: domElementIds.levelCounter,
+              style: formatStyle({ flexDirection: "row", marginBottom: 32 }),
             },
+            children: [
+              element(Elements.flexWithoutStyle, {
+                tagProps: {
+                  id: domElementIds.levelCounter,
+                },
+              }),
+              element(Elements.button, {
+                tagProps: {
+                  id: domElementIds.giveUpButton,
+                  onclick: Text(and(
+                    execFunc("confirm", Text("Give up this game?")),
+                    execFunc(functions.goToGameOverPage),
+                  )),
+                },
+                children: "❌ Give up",
+              }),
+            ],
           }),
 
           element(Elements.flexWithoutStyle, {
             tagProps: {
               style: formatStyle({
-                width: "99%",
+                width: "100%",
                 flexDirection: "row",
                 justifyContent: "space-around",
                 alignItems: "start",
               }),
             },
             children: [
-              element(Elements.button, {
-                children: [
-                  "<br>Card Shop",
-                  element(Elements.paragraph, {
-                    tagProps: {
-                      id: domElementIds.gameMoneyCounter,
-                    },
-                  }),
-                ],
-                tagProps: {
-                  id: domElementIds.cardShopButton,
-                  onclick: execFunc(
-                    prop(domElementIds.cardShopDialog, "showModal"),
-                  ),
-                },
-              }),
+              element(Elements.paragraph, {}),
 
               element(Elements.interactive, {
                 children: "Draw",
@@ -76,14 +78,20 @@ export function defineGamePage() {
               }),
 
               element(Elements.button, {
+                children: [
+                  "<br>Card Shop",
+                  element(Elements.paragraph, {
+                    tagProps: {
+                      id: domElementIds.gameMoneyCounter,
+                    },
+                  }),
+                ],
                 tagProps: {
-                  id: domElementIds.giveUpButton,
-                  onclick: Text(and(
-                    execFunc("confirm", Text("Give up this game?")),
-                    execFunc(functions.goToGameOverPage),
-                  )),
+                  id: domElementIds.cardShopButton,
+                  onclick: execFunc(
+                    prop(domElementIds.cardShopDialog, "showModal"),
+                  ),
                 },
-                children: "❌ Give up",
               }),
             ],
           }),
@@ -107,16 +115,9 @@ export function defineGamePage() {
                   id: domElementIds.shopMoneyCounter,
                 },
               }),
-              element(Elements.card, {
-                children: "🃏",
-                tagProps: {
-                  onclick: dispatch(actions.buyCard("A1")),
-                },
-              }),
               element(Elements.button, {
                 children: "Close",
                 tagProps: {
-                  autofocus: "",
                   onclick: execFunc(
                     prop(domElementIds.cardShopDialog, "close"),
                   ),
