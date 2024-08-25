@@ -11,7 +11,7 @@ case "$1" in
     ;;
 
   "reload-deps")
-    deno cache --reload main.ts
+    deno cache --lock-write --reload main.ts
     ;;
 
   *)
