@@ -1,5 +1,21 @@
-import { add, assign, defineFunc, prop, Text } from "../deps.ts";
-import { domElementIds, functions, state } from "../variables.ts";
+import {
+  add,
+  assign,
+  defineFunc,
+  element,
+  execFunc,
+  formatStyle,
+  prop,
+  statements,
+  Text,
+} from "../deps.ts";
+import {
+  domElementIds,
+  Elements,
+  functions,
+  state,
+  tmpRefs,
+} from "../variables.ts";
 
 export function defineLevelCounterRefresh() {
   return defineFunc(
@@ -36,6 +52,45 @@ export function defineMoneyCountersRefresh() {
           add(Text("💰 "), state.money),
         ),
       ),
+    },
+  );
+}
+
+export function defineCardReveal() {
+  const pageHtml = prop(domElementIds.page, "innerHTML");
+  const setCurrentCard = assign(
+    tmpRefs.currentCard,
+    execFunc(prop(state.deckCards, "pop")),
+  );
+
+  return defineFunc(
+    {
+      name: functions.cardReveal,
+      body: assign(
+        pageHtml,
+        add(
+          pageHtml,
+          element(Elements.card, {
+            as: "templateLiteral",
+            children: setCurrentCard,
+            tagProps: {
+              // style: formatStyle({
+              //   // TODO: position to + left to be on top of the deck
+              // }),
+              onclick: execFunc(functions.drawRevealedCard),
+            },
+          }),
+        ),
+      ),
+    },
+  );
+}
+
+export function defineDrawRevealedCard() {
+  return defineFunc(
+    {
+      name: functions.drawRevealedCard,
+      body: "console.log('drawRevealedCard')",
     },
   );
 }

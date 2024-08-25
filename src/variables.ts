@@ -1,7 +1,7 @@
 import { initialState } from "./data-store/state.ts";
 import { provideTmpVarNames } from "./deps.ts";
 
-export const { state, functions, domElementIds, params, texts } =
+export const { state, functions, domElementIds, params, tmpRefs, texts } =
   provideTmpVarNames(
     {
       state: initialState,
@@ -13,6 +13,8 @@ export const { state, functions, domElementIds, params, texts } =
         refreshLevelCounter: "",
         refreshPerkPointsCounter: "",
         refreshMoneyCounters: "",
+        cardReveal: "",
+        drawRevealedCard: "",
       },
       domElementIds: {
         page: "",
@@ -28,8 +30,10 @@ export const { state, functions, domElementIds, params, texts } =
         cardShopDialog: "",
       },
       params: {
-        time: "",
         item: "",
+      },
+      tmpRefs: {
+        currentCard: "",
       },
       texts: {},
     } as const,
@@ -37,7 +41,7 @@ export const { state, functions, domElementIds, params, texts } =
 
 export const Elements = {
   button: "a",
-  page: "b",
+  page: "d",
   flexWithoutStyle: "z",
   paragraph: "p",
   interactive: "v",

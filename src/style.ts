@@ -42,14 +42,22 @@ export function getStylesheet() {
     ["::backdrop"]: {
       background: "#7777",
     },
-    [id(domElementIds.deck)]: {
+    [list(Elements.card, id(domElementIds.deck))]: {
       borderRadius: "24px",
-      background: "#1EE",
+      height: 290, //384,
+      width: 256,
       color: "#000",
+      paddingBottom: 45,
+    },
+    [id(domElementIds.deck)]: {
+      background: "#1EE",
       outline: "2px double #000",
       boxShadow: "0 0 4px 4px #188",
-      height: 384,
-      width: 256,
+    },
+    [Elements.card]: {
+      background: "#FFF",
+      fontSize: 400,
+      position: "fixed",
     },
     [id(domElementIds.discardPile)]: {
       alignSelf: "flex-end",

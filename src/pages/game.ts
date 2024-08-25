@@ -86,7 +86,7 @@ export function defineGamePage() {
                 children: "Draw",
                 tagProps: {
                   id: domElementIds.deck,
-                  onclick: dispatch(actions.draw()), // TODO: execFunc(functions.drawCard),
+                  onclick: execFunc(functions.cardReveal),
                 },
               }),
               // Discard pile

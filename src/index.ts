@@ -1,8 +1,6 @@
 import {
   element,
   initVariables,
-  manifestLink,
-  registerServiceWorker,
   SrcProps,
   titleTag,
   viewportMeta,
@@ -16,6 +14,8 @@ import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
 import {
+  defineCardReveal,
+  defineDrawRevealedCard,
   defineLevelCounterRefresh,
   defineMoneyCountersRefresh,
   definePerkPointsCounterRefresh,
@@ -41,7 +41,7 @@ export function getGameSrc(): SrcProps {
   };
 }
 
-function getScript() {
+function getScript(): string {
   return statements(
     // Register the service worker
     // registerServiceWorker(), // TODO: useful for JS13K?
@@ -53,6 +53,8 @@ function getScript() {
     defineLevelCounterRefresh(),
     definePerkPointsCounterRefresh(),
     defineMoneyCountersRefresh(),
+    defineCardReveal(),
+    defineDrawRevealedCard(),
     // Init the state
     initVariables(state, initialState),
     // Render the Home page

@@ -1,6 +1,6 @@
 // import { config } from "../config.ts";
 
-import { List } from "../deps.ts";
+import { List, Text } from "../deps.ts";
 
 // no need I think?
 // export const enum GameState {
@@ -14,7 +14,8 @@ export const initialState = {
   perkPoints: "0",
   perks: List(),
   playerHandCards: List(),
-  deckCards: List(),
+  // deckCards: List(),
+  deckCards: List(Text("🂡"), Text("🂢"), Text("🂣"), Text("🂤"), Text("🂥")),
   discardedCards: List(),
   boss: {
     text: "0",
