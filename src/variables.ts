@@ -9,6 +9,7 @@ export const {
   tmpRefs,
   texts,
   props,
+  animations,
 } = provideTmpVarNames(
   {
     state: initialState,
@@ -46,6 +47,9 @@ export const {
     texts: {},
     props: {
       getBoundingClientRect: "getBoundingClientRect",
+    },
+    animations: {
+      cardReveal: "",
     },
   } as const,
 );

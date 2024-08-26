@@ -1,8 +1,14 @@
-import { domElementIds, Elements } from "./variables.ts";
+import { animations, domElementIds, Elements } from "./variables.ts";
 import { formatStylesheet } from "./deps.ts";
 
 export function getStylesheet() {
   return formatStylesheet({
+    [`@keyframes ${animations.cardReveal}`]: formatStylesheet({
+      "0%": { transform: "scaleX(-1)", background: "#A11", color: "#A11" },
+      "40%": { background: "#A11", color: "#A11" },
+      "50%": { background: "#FFF", color: "#000" },
+      "100%": {},
+    }),
     body: { background: "#111" },
     [list(Elements.page, `${Elements.page} *`)]: {
       color: "#EEE",
@@ -55,6 +61,7 @@ export function getStylesheet() {
       boxShadow: "0 0 4px 4px #188",
     },
     [Elements.card]: {
+      border: "2px solid #000",
       background: "#FFF",
       fontSize: 400,
       position: "fixed",

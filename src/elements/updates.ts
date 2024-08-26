@@ -11,6 +11,7 @@ import {
   Text,
 } from "../deps.ts";
 import {
+  animations,
   domElementIds,
   Elements,
   functions,
@@ -86,10 +87,11 @@ export function defineCardReveal() {
               as: "templateLiteral",
               children: setCurrentCard,
               tagProps: {
-                style: formatStyle({
+                style: Text(formatStyle({
                   left: "${" + prop(tmpRefs.obj, "left") + "}",
                   top: "${" + prop(tmpRefs.obj, "top") + "}",
-                }),
+                  animation: `1s ${animations.cardReveal}`,
+                })),
                 onclick: execFunc(functions.drawRevealedCard),
               },
             }),
