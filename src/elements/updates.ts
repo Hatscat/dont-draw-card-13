@@ -2,6 +2,7 @@ import {
   add,
   assign,
   defineFunc,
+  dynamicProp,
   element,
   execFunc,
   formatStyle,
@@ -13,6 +14,7 @@ import {
   domElementIds,
   Elements,
   functions,
+  props,
   state,
   tmpRefs,
 } from "../variables.ts";
@@ -66,20 +68,32 @@ export function defineCardReveal() {
   return defineFunc(
     {
       name: functions.cardReveal,
-      body: assign(
-        pageHtml,
-        add(
+      body: statements(
+        assign(
+          tmpRefs.obj,
+          execFunc(
+            dynamicProp(
+              domElementIds.deck,
+              props.getBoundingClientRect,
+            ),
+          ),
+        ),
+        assign(
           pageHtml,
-          element(Elements.card, {
-            as: "templateLiteral",
-            children: setCurrentCard,
-            tagProps: {
-              // style: formatStyle({
-              //   // TODO: position to + left to be on top of the deck
-              // }),
-              onclick: execFunc(functions.drawRevealedCard),
-            },
-          }),
+          add(
+            pageHtml,
+            element(Elements.card, {
+              as: "templateLiteral",
+              children: setCurrentCard,
+              tagProps: {
+                style: formatStyle({
+                  left: "${" + prop(tmpRefs.obj, "left") + "}",
+                  top: "${" + prop(tmpRefs.obj, "top") + "}",
+                }),
+                onclick: execFunc(functions.drawRevealedCard),
+              },
+            }),
+          ),
         ),
       ),
     },

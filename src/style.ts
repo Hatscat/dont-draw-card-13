@@ -44,10 +44,10 @@ export function getStylesheet() {
     },
     [list(Elements.card, id(domElementIds.deck))]: {
       borderRadius: "24px",
-      height: 290, //384,
+      height: 320,
       width: 256,
       color: "#000",
-      paddingBottom: 45,
+      paddingBottom: 40,
     },
     [id(domElementIds.deck)]: {
       background: "#1EE",

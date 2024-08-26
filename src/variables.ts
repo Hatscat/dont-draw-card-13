@@ -1,43 +1,54 @@
 import { initialState } from "./data-store/state.ts";
 import { provideTmpVarNames } from "./deps.ts";
 
-export const { state, functions, domElementIds, params, tmpRefs, texts } =
-  provideTmpVarNames(
-    {
-      state: initialState,
-      functions: {
-        goToMenuPage: "",
-        goToGamePage: "",
-        goToPerksPage: "",
-        goToGameOverPage: "",
-        refreshLevelCounter: "",
-        refreshPerkPointsCounter: "",
-        refreshMoneyCounters: "",
-        cardReveal: "",
-        drawRevealedCard: "",
-      },
-      domElementIds: {
-        page: "",
-        playerHand: "",
-        levelCounter: "",
-        perkPointsCounter: "",
-        gameMoneyCounter: "",
-        shopMoneyCounter: "",
-        deck: "",
-        discardPile: "",
-        giveUpButton: "",
-        cardShopButton: "",
-        cardShopDialog: "",
-      },
-      params: {
-        item: "",
-      },
-      tmpRefs: {
-        currentCard: "",
-      },
-      texts: {},
-    } as const,
-  );
+export const {
+  state,
+  functions,
+  domElementIds,
+  params,
+  tmpRefs,
+  texts,
+  props,
+} = provideTmpVarNames(
+  {
+    state: initialState,
+    functions: {
+      goToMenuPage: "",
+      goToGamePage: "",
+      goToPerksPage: "",
+      goToGameOverPage: "",
+      refreshLevelCounter: "",
+      refreshPerkPointsCounter: "",
+      refreshMoneyCounters: "",
+      cardReveal: "",
+      drawRevealedCard: "",
+    },
+    domElementIds: {
+      page: "",
+      playerHand: "",
+      levelCounter: "",
+      perkPointsCounter: "",
+      gameMoneyCounter: "",
+      shopMoneyCounter: "",
+      deck: "",
+      discardPile: "",
+      giveUpButton: "",
+      cardShopButton: "",
+      cardShopDialog: "",
+    },
+    params: {
+      item: "",
+    },
+    tmpRefs: {
+      currentCard: "",
+      obj: "",
+    },
+    texts: {},
+    props: {
+      getBoundingClientRect: "getBoundingClientRect",
+    },
+  } as const,
+);
 
 export const Elements = {
   button: "a",

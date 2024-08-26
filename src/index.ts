@@ -1,14 +1,22 @@
 import {
+  assign,
   element,
   initVariables,
   SrcProps,
+  Text,
   titleTag,
   viewportMeta,
 } from "./deps.ts";
 import { execFunc, statements } from "./deps.ts";
 import { defineGamePage } from "./pages/game.ts";
 import { defineMenuPage } from "./pages/menu.ts";
-import { domElementIds, Elements, functions, state } from "./variables.ts";
+import {
+  domElementIds,
+  Elements,
+  functions,
+  props,
+  state,
+} from "./variables.ts";
 import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
@@ -45,6 +53,8 @@ function getScript(): string {
   return statements(
     // Register the service worker
     // registerServiceWorker(), // TODO: useful for JS13K?
+    // Assign constants
+    assign(props.getBoundingClientRect, Text("getBoundingClientRect")),
     // Declare functions
     defineMenuPage(),
     definePerksPage(),
