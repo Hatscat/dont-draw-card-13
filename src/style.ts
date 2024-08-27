@@ -4,9 +4,9 @@ import { formatStylesheet } from "./deps.ts";
 export function getStylesheet() {
   return formatStylesheet({
     [`@keyframes ${animations.cardReveal}`]: formatStylesheet({
-      "0%": { transform: "scaleX(-1)", background: "#A11", color: "#A11" },
-      "40%": { background: "#A11", color: "#A11" },
-      "50%": { background: "#FFF", color: "#000" },
+      "0%": { transform: "scaleX(-1)", background: "#000" },
+      "20%": { background: "#000" },
+      "50%": { background: "#FFF" },
       "100%": {},
     }),
     body: { background: "#111" },
@@ -19,7 +19,7 @@ export function getStylesheet() {
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
-      transition: "all 0.6s ease",
+      transition: "all 1s ease",
     },
     [directChildren(Elements.page)]: {
       minWidth: 256,
@@ -56,9 +56,9 @@ export function getStylesheet() {
       paddingBottom: 40,
     },
     [id(domElementIds.deck)]: {
-      background: "#1EE",
+      background: "#FFF",
       outline: "2px double #000",
-      boxShadow: "0 0 4px 4px #188",
+      boxShadow: "0 0 4px 4px #777",
     },
     [Elements.card]: {
       border: "2px solid #000",
