@@ -15,6 +15,7 @@ import {
   domElementIds,
   Elements,
   functions,
+  params,
   props,
   state,
   tmpRefs,
@@ -60,18 +61,19 @@ export function defineMoneyCountersRefresh() {
 }
 
 export function defineCardReveal() {
-  const pageHtml = prop(domElementIds.page, "innerHTML");
+  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
   const setCurrentCard = assign(
     tmpRefs.currentCard,
     execFunc(prop(state.deckCards, "pop")),
   );
+  const deckBox = tmpRefs.obj;
 
   return defineFunc(
     {
       name: functions.cardReveal,
       body: statements(
         assign(
-          tmpRefs.obj,
+          deckBox,
           execFunc(
             dynamicProp(
               domElementIds.deck,
@@ -80,23 +82,38 @@ export function defineCardReveal() {
           ),
         ),
         assign(
-          pageHtml,
+          playerHandHtml,
           add(
-            pageHtml,
+            playerHandHtml,
             element(Elements.card, {
               as: "templateLiteral",
               children: setCurrentCard,
               tagProps: {
                 style: Text(formatStyle({
-                  left: "${" + prop(tmpRefs.obj, "left") + "}",
-                  top: "${" + prop(tmpRefs.obj, "top") + "}",
+                  left: "${" + prop(deckBox, "left") + "}",
+                  top: "${" + prop(deckBox, "top") + "}",
                   animation: `1s ${animations.cardReveal}`,
                 })),
-                onclick: execFunc(functions.drawRevealedCard),
+                onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
               },
             }),
           ),
         ),
+        execFunc("setTimeout", [
+          defineFunc(
+            {
+              body: statements(
+                assign(
+                  tmpRefs.obj,
+                  prop(domElementIds.playerHand, "lastChild", "style"),
+                ),
+                assign(prop(tmpRefs.obj, "left"), Text("0px")),
+                assign(prop(tmpRefs.obj, "top"), Text("80%")),
+              ),
+            },
+          ),
+          "1e3",
+        ]),
       ),
     },
   );

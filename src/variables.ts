@@ -38,7 +38,8 @@ export const {
       cardShopDialog: "",
     },
     params: {
-      item: "",
+      // item: "",
+      // event: "",
     },
     tmpRefs: {
       currentCard: "",
