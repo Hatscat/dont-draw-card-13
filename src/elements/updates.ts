@@ -107,6 +107,7 @@ export function defineCardReveal() {
                   tmpRefs.obj,
                   prop(domElementIds.playerHand, "lastChild", "style"),
                 ),
+                assign(prop(tmpRefs.obj, "animation"), Text("")),
                 assign(prop(tmpRefs.obj, "left"), Text("0px")),
                 assign(prop(tmpRefs.obj, "top"), Text("80%")),
               ),
