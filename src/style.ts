@@ -1,5 +1,5 @@
 import { animations, domElementIds, Elements } from "./variables.ts";
-import { formatStylesheet } from "./deps.ts";
+import { formatStylesheet, Text } from "./deps.ts";
 
 export function getStylesheet() {
   return formatStylesheet({
@@ -50,10 +50,9 @@ export function getStylesheet() {
     },
     [list(Elements.card, id(domElementIds.deck))]: {
       borderRadius: "24px",
-      height: 320,
+      height: 360,
       width: 256,
       color: "#000",
-      paddingBottom: 40,
     },
     [id(domElementIds.deck)]: {
       background: "#FFF",
@@ -61,10 +60,14 @@ export function getStylesheet() {
       boxShadow: "0 0 4px 4px #777",
     },
     [Elements.card]: {
-      border: "2px solid #000",
       background: "#FFF",
-      fontSize: 400,
       position: "fixed",
+    },
+    [`${Elements.card}>*`]: {
+      fontSize: 400,
+      position: "absolute",
+      top: -88,
+      color: "#000",
     },
     [id(domElementIds.discardPile)]: {
       alignSelf: "flex-end",

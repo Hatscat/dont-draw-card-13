@@ -6,8 +6,10 @@ import {
   element,
   execFunc,
   formatStyle,
+  mul,
   prop,
   statements,
+  templateExpression,
   Text,
 } from "../deps.ts";
 import {
@@ -87,17 +89,26 @@ export function defineCardReveal() {
             playerHandHtml,
             element(Elements.card, {
               as: "templateLiteral",
-              children: setCurrentCard,
+              children: [
+                "",
+                element(Elements.flexWithoutStyle, {
+                  children: templateExpression(setCurrentCard),
+                }),
+              ],
               tagProps: {
                 style: Text(formatStyle({
-                  left: "${" + prop(deckBox, "left") + "}",
-                  top: "${" + prop(deckBox, "top") + "}",
+                  left: templateExpression(prop(deckBox, "left")),
+                  top: templateExpression(prop(deckBox, "top")),
                   animation: `1s ${animations.cardReveal}`,
                 })),
                 onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
               },
             }),
           ),
+        ),
+        execFunc(
+          prop(state.playerHandCards, "push"),
+          tmpRefs.currentCard,
         ),
         execFunc("setTimeout", [
           defineFunc(
@@ -108,7 +119,10 @@ export function defineCardReveal() {
                   prop(domElementIds.playerHand, "lastChild", "style"),
                 ),
                 assign(prop(tmpRefs.obj, "animation"), Text("")),
-                assign(prop(tmpRefs.obj, "left"), Text("0px")),
+                assign(
+                  prop(tmpRefs.obj, "left"),
+                  mul(prop(state.playerHandCards, "length"), 64),
+                ),
                 assign(prop(tmpRefs.obj, "top"), Text("80%")),
               ),
             },
