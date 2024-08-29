@@ -12,6 +12,7 @@ import {
   templateExpression,
   Text,
 } from "../deps.ts";
+import { ClassName } from "../style.ts";
 import {
   animations,
   domElementIds,
@@ -131,10 +132,10 @@ export function defineCardReveal() {
                     "top",
                   ),
                 ),
-                // assign(
-                //   prop(tmpRefs.obj, "&:hover", "transform"),
-                //   "translateY(-16)",
-                // ),
+                assign(
+                  prop(domElementIds.playerHand, "lastChild", "className"),
+                  Text(ClassName.InteractiveCard),
+                ),
                 execFunc(
                   prop(state.playerHandCards, "push"),
                   tmpRefs.currentCard,

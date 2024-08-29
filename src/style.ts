@@ -1,6 +1,10 @@
 import { animations, domElementIds, Elements } from "./variables.ts";
 import { formatStylesheet, Text } from "./deps.ts";
 
+export const enum ClassName {
+  InteractiveCard = "a",
+}
+
 export function getStylesheet() {
   return formatStylesheet({
     [`@keyframes ${animations.cardReveal}`]: formatStylesheet({
@@ -62,7 +66,6 @@ export function getStylesheet() {
     [Elements.card]: {
       background: "#FFF",
       position: "fixed",
-      // "&:hover": "{transform:translateY(-64px)}",
     },
     [`${Elements.card}>*`]: {
       fontSize: 400,
@@ -81,6 +84,9 @@ export function getStylesheet() {
     [id(domElementIds.playerHand)]: {
       height: 192,
       margin: 24,
+    },
+    [`.${ClassName.InteractiveCard}:hover`]: {
+      transform: "translateY(-64px)",
     },
   });
 }
