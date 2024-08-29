@@ -24,7 +24,7 @@ export function getStylesheet() {
     [directChildren(Elements.page)]: {
       minWidth: 256,
     },
-    [list(Elements.interactive, Elements.button)]: {
+    [list(Elements.interactive, Elements.button, Elements.card)]: {
       cursor: "pointer",
     },
     [Elements.button]: {
@@ -62,12 +62,14 @@ export function getStylesheet() {
     [Elements.card]: {
       background: "#FFF",
       position: "fixed",
+      // "&:hover": "{transform:translateY(-64px)}",
     },
     [`${Elements.card}>*`]: {
       fontSize: 400,
       position: "absolute",
       top: -88,
       color: "#000",
+      pointerEvents: "none",
     },
     [id(domElementIds.discardPile)]: {
       alignSelf: "flex-end",
@@ -75,6 +77,10 @@ export function getStylesheet() {
       border: "4px dashed #CCC",
       height: 192,
       width: 128,
+    },
+    [id(domElementIds.playerHand)]: {
+      height: 192,
+      margin: 24,
     },
   });
 }

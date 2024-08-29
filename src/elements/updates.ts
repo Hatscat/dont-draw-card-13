@@ -99,16 +99,12 @@ export function defineCardReveal() {
                 style: Text(formatStyle({
                   left: templateExpression(prop(deckBox, "left")),
                   top: templateExpression(prop(deckBox, "top")),
-                  animation: `1s ${animations.cardReveal}`,
+                  animation: `0.5s ${animations.cardReveal}`,
                 })),
                 onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
               },
             }),
           ),
-        ),
-        execFunc(
-          prop(state.playerHandCards, "push"),
-          tmpRefs.currentCard,
         ),
         execFunc("setTimeout", [
           defineFunc(
@@ -123,11 +119,30 @@ export function defineCardReveal() {
                   prop(tmpRefs.obj, "left"),
                   mul(prop(state.playerHandCards, "length"), 64),
                 ),
-                assign(prop(tmpRefs.obj, "top"), Text("80%")),
+                assign(
+                  prop(tmpRefs.obj, "top"),
+                  prop(
+                    execFunc(
+                      dynamicProp(
+                        domElementIds.playerHand,
+                        props.getBoundingClientRect,
+                      ),
+                    ),
+                    "top",
+                  ),
+                ),
+                // assign(
+                //   prop(tmpRefs.obj, "&:hover", "transform"),
+                //   "translateY(-16)",
+                // ),
+                execFunc(
+                  prop(state.playerHandCards, "push"),
+                  tmpRefs.currentCard,
+                ),
               ),
             },
           ),
-          "1e3",
+          600,
         ]),
       ),
     },
