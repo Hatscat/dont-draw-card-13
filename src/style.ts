@@ -60,19 +60,23 @@ export function getStylesheet() {
     },
     [id(domElementIds.deck)]: {
       background: "#FFF",
-      outline: "2px double #000",
+      outline: "2px double",
       boxShadow: "0 0 4px 4px #777",
     },
     [Elements.card]: {
       background: "#FFF",
       position: "fixed",
+      border: "4px solid",
     },
     [`${Elements.card}>*`]: {
+      fontSize: 88,
+      color: "#000",
+      pointerEvents: "none",
+    },
+    [Elements.emojiCard]: {
       fontSize: 400,
       position: "absolute",
       top: -88,
-      color: "#000",
-      pointerEvents: "none",
     },
     [id(domElementIds.discardPile)]: {
       alignSelf: "flex-end",
@@ -86,7 +90,7 @@ export function getStylesheet() {
       margin: 24,
     },
     [`.${ClassName.InteractiveCard}:hover`]: {
-      transform: "translateY(-64px)",
+      transform: "translateY(-66%)",
     },
   });
 }

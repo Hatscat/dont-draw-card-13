@@ -6,6 +6,8 @@ import {
   element,
   execFunc,
   formatStyle,
+  ifElse,
+  isGreater,
   mul,
   prop,
   statements,
@@ -15,11 +17,11 @@ import {
 import { ClassName } from "../style.ts";
 import {
   animations,
+  constants,
+  data,
   domElementIds,
   Elements,
   functions,
-  params,
-  props,
   state,
   tmpRefs,
 } from "../variables.ts";
@@ -65,10 +67,6 @@ export function defineMoneyCountersRefresh() {
 
 export function defineCardReveal() {
   const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
-  const setCurrentCard = assign(
-    tmpRefs.currentCard,
-    execFunc(prop(state.deckCards, "pop")),
-  );
   const deckBox = tmpRefs.obj;
 
   return defineFunc(
@@ -80,9 +78,13 @@ export function defineCardReveal() {
           execFunc(
             dynamicProp(
               domElementIds.deck,
-              props.getBoundingClientRect,
+              constants.getBoundingClientRect,
             ),
           ),
+        ),
+        assign(
+          tmpRefs.currentCard,
+          execFunc(prop(data.deckCards, "pop")),
         ),
         assign(
           playerHandHtml,
@@ -90,12 +92,17 @@ export function defineCardReveal() {
             playerHandHtml,
             element(Elements.card, {
               as: "templateLiteral",
-              children: [
-                "",
-                element(Elements.flexWithoutStyle, {
-                  children: templateExpression(setCurrentCard),
+              children: ifElse(
+                isGreater(prop(tmpRefs.currentCard, "length"), 2),
+                element(Elements.emojiCard, {
+                  as: "templateLiteral",
+                  children: tmpRefs.currentCard,
                 }),
-              ],
+                element(Elements.textCard, {
+                  as: "templateLiteral",
+                  children: tmpRefs.currentCard,
+                }),
+              ),
               tagProps: {
                 style: Text(formatStyle({
                   left: templateExpression(prop(deckBox, "left")),
@@ -126,7 +133,7 @@ export function defineCardReveal() {
                     execFunc(
                       dynamicProp(
                         domElementIds.playerHand,
-                        props.getBoundingClientRect,
+                        constants.getBoundingClientRect,
                       ),
                     ),
                     "top",
@@ -134,7 +141,7 @@ export function defineCardReveal() {
                 ),
                 assign(
                   prop(domElementIds.playerHand, "lastChild", "className"),
-                  Text(ClassName.InteractiveCard),
+                  Text(ClassName.InteractiveCard), // TODO: on click instead of hover
                 ),
                 execFunc(
                   prop(state.playerHandCards, "push"),

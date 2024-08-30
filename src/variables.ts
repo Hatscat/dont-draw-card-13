@@ -8,7 +8,8 @@ export const {
   params,
   tmpRefs,
   texts,
-  props,
+  constants,
+  data,
   animations,
 } = provideTmpVarNames(
   {
@@ -42,12 +43,18 @@ export const {
       // event: "",
     },
     tmpRefs: {
+      index: "",
       currentCard: "",
       obj: "",
+      item: "",
     },
     texts: {},
-    props: {
-      getBoundingClientRect: "getBoundingClientRect",
+    data: {
+      deckCards: "",
+    },
+    constants: {
+      getBoundingClientRect: "",
+      baseCards: "",
     },
     animations: {
       cardReveal: "",
@@ -63,4 +70,6 @@ export const Elements = {
   interactive: "v",
   bigTitle: "h1",
   card: "c",
+  emojiCard: "e",
+  textCard: "b",
 } as const;

@@ -21,7 +21,7 @@ import {
   statements,
   sub,
 } from "../deps.ts";
-import { params, state } from "../variables.ts";
+import { data, params, state } from "../variables.ts";
 import { State } from "./state.ts";
 
 enum ActionType {
@@ -83,7 +83,7 @@ function mutator(state: State, action: Action): string {
     case ActionType.Draw: {
       return execFunc(
         prop(state.playerHandCards, "push"),
-        execFunc(prop(state.deckCards, "pop")),
+        execFunc(prop(data.deckCards, "pop")),
       );
     }
     case ActionType.Discard: {
