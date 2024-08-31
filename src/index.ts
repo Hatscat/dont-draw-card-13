@@ -7,12 +7,15 @@ import {
   dynamicProp,
   element,
   group,
+  ifThen,
+  increment,
   initVariables,
   isGreater,
-  List,
+  isLess,
   loop,
   or,
   prop,
+  Record,
   SrcProps,
   sub,
   Text,
@@ -84,7 +87,7 @@ function getScript(): string {
     assign(
       data.deckCards,
       execFunc(
-        prop(constants.baseCards, "sort"),
+        prop(execFunc(prop("Object", "keys"), constants.cardValues), "sort"),
         defineFunc({
           body: sub(execFunc(prop("Math", "random")), ".5"),
           safe: false,
@@ -99,39 +102,69 @@ function getScript(): string {
 
 function defineBaseCards() {
   return statements(
-    assign(constants.baseCards, List()),
+    assign(constants.cardValues, Record({})),
     assign(tmpRefs.obj, Text("&#x1F0")),
     loop({
-      init: assign(tmpRefs.index, 13),
-      condition: decrement(tmpRefs.index),
-      body: execFunc(
-        prop(constants.baseCards, "push"),
-        [
-          add(
-            tmpRefs.obj,
-            Text("A"),
-            group(
-              assign(
-                tmpRefs.item,
-                or(
-                  dynamicProp(Text("EDBA"), sub(12, tmpRefs.index)),
-                  add(tmpRefs.index, 1),
-                ),
-              ),
+      init: assign(tmpRefs.index, 0),
+      condition: isLess(increment(tmpRefs.index), 13),
+      body: group(
+        statements(
+          // value for classic cards
+          assign(tmpRefs.n, execFunc(prop("Math", "min"), [tmpRefs.index, 10])),
+          // html codes for card emojis
+          assign(
+            tmpRefs.item,
+            or(
+              dynamicProp(Text("EDBA"), sub(13, tmpRefs.index)),
+              tmpRefs.index,
             ),
           ),
-          add(tmpRefs.obj, Text("B"), tmpRefs.item),
-          add(tmpRefs.obj, Text("C"), tmpRefs.item),
-          add(tmpRefs.obj, Text("D"), tmpRefs.item),
-          add(tmpRefs.index, 1),
-        ],
-      ),
-      body2: and(
-        isGreater(tmpRefs.index, 4),
-        execFunc(
-          prop(constants.baseCards, "push"),
-          add(tmpRefs.index, 9),
+          // spades
+          assign(
+            dynamicProp(
+              constants.cardValues,
+              add(tmpRefs.obj, Text("A"), tmpRefs.item),
+            ),
+            tmpRefs.n,
+          ),
+          // hearts
+          assign(
+            dynamicProp(
+              constants.cardValues,
+              add(tmpRefs.obj, Text("B"), tmpRefs.item),
+            ),
+            tmpRefs.n,
+          ),
+          // diamonds
+          assign(
+            dynamicProp(
+              constants.cardValues,
+              add(tmpRefs.obj, Text("C"), tmpRefs.item),
+            ),
+            tmpRefs.n,
+          ),
+          // clubs
+          assign(
+            dynamicProp(
+              constants.cardValues,
+              add(tmpRefs.obj, Text("D"), tmpRefs.item),
+            ),
+            tmpRefs.n,
+          ),
+          // trump cards
+          assign(
+            dynamicProp(constants.cardValues, tmpRefs.index),
+            tmpRefs.index,
+          ),
+          ifThen(
+            isGreater(tmpRefs.index, 5),
+            assign(
+              dynamicProp(constants.cardValues, add(tmpRefs.index, 8)),
+              add(tmpRefs.index, 8),
+            ),
+          ),
         ),
+        "}",
       ),
     }),
   );

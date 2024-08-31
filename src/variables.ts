@@ -44,6 +44,7 @@ export const {
     },
     tmpRefs: {
       index: "",
+      n: "",
       currentCard: "",
       obj: "",
       item: "",
@@ -54,7 +55,7 @@ export const {
     },
     constants: {
       getBoundingClientRect: "",
-      baseCards: "",
+      cardValues: "",
     },
     animations: {
       cardReveal: "",

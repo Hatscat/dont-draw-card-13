@@ -89,7 +89,7 @@ export function getStylesheet() {
       height: 192,
       margin: 24,
     },
-    [`.${ClassName.InteractiveCard}:hover`]: {
+    [`.${ClassName.InteractiveCard}:active`]: {
       transform: "translateY(-66%)",
     },
   });
