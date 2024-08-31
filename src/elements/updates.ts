@@ -5,8 +5,11 @@ import {
   dynamicProp,
   element,
   execFunc,
+  expressions,
   formatStyle,
+  group,
   ifElse,
+  isDifferent,
   isGreater,
   mul,
   prop,
@@ -54,95 +57,117 @@ export function defineMoneyCountersRefresh() {
 }
 
 export function defineCardReveal() {
-  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
-  const deckBox = tmpRefs.obj;
+  const setDeckBox = assign(
+    tmpRefs.obj,
+    execFunc(
+      dynamicProp(
+        domElementIds.deck,
+        constants.getBoundingClientRect,
+      ),
+    ),
+  );
 
   return defineFunc(
     {
       name: functions.cardReveal,
       body: statements(
-        assign(
-          deckBox,
-          execFunc(
-            dynamicProp(
-              domElementIds.deck,
-              constants.getBoundingClientRect,
-            ),
-          ),
-        ),
+        setDeckBox,
         assign(
           tmpRefs.currentCard,
           execFunc(prop(data.deckCards, "pop")),
         ),
-        assign(
-          playerHandHtml,
-          add(
-            playerHandHtml,
-            element(Elements.card, {
-              as: "templateLiteral",
-              children: ifElse(
-                isGreater(prop(tmpRefs.currentCard, "length"), 2),
-                element(Elements.emojiCard, {
-                  as: "templateLiteral",
-                  children: tmpRefs.currentCard,
-                }),
-                element(Elements.textCard, {
-                  as: "templateLiteral",
-                  children: tmpRefs.currentCard,
-                }),
-              ),
-              tagProps: {
-                style: Text(formatStyle({
-                  left: templateExpression(prop(deckBox, "left")),
-                  top: templateExpression(prop(deckBox, "top")),
-                  animation: `0.5s ${animations.cardReveal}`,
-                })),
-                onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
-              },
-            }),
+        ifElse(
+          isDifferent(
+            dynamicProp(constants.cardValues, tmpRefs.currentCard),
+            13,
           ),
+          drawValidCard(),
+          draw13Card(),
         ),
-        execFunc("setTimeout", [
-          defineFunc(
-            {
-              body: statements(
-                assign(
-                  tmpRefs.obj,
-                  prop(domElementIds.playerHand, "lastChild", "style"),
-                ),
-                assign(prop(tmpRefs.obj, "animation"), Text("")),
-                assign(
-                  prop(tmpRefs.obj, "left"),
-                  mul(prop(state.playerHandCards, "length"), 64),
-                ),
-                assign(
-                  prop(tmpRefs.obj, "top"),
-                  prop(
-                    execFunc(
-                      dynamicProp(
-                        domElementIds.playerHand,
-                        constants.getBoundingClientRect,
-                      ),
-                    ),
-                    "top",
-                  ),
-                ),
-                assign(
-                  prop(domElementIds.playerHand, "lastChild", "className"),
-                  Text(ClassName.InteractiveCard), // TODO: on click instead of hover
-                ),
-                execFunc(
-                  prop(state.playerHandCards, "push"),
-                  tmpRefs.currentCard,
-                ),
-              ),
-            },
-          ),
-          600,
-        ]),
       ),
     },
   );
+}
+
+function drawValidCard() {
+  const deckBox = tmpRefs.obj;
+  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
+
+  return group(
+    expressions(
+      assign(
+        playerHandHtml,
+        add(
+          playerHandHtml,
+          element(Elements.card, {
+            as: "templateLiteral",
+            children: ifElse(
+              isGreater(prop(tmpRefs.currentCard, "length"), 2),
+              element(Elements.emojiCard, {
+                as: "templateLiteral",
+                children: tmpRefs.currentCard,
+              }),
+              element(Elements.textCard, {
+                as: "templateLiteral",
+                children: tmpRefs.currentCard,
+              }),
+            ),
+            tagProps: {
+              style: Text(formatStyle({
+                left: templateExpression(prop(deckBox, "left")),
+                top: templateExpression(prop(deckBox, "top")),
+                animation: `0.5s ${animations.cardReveal}`,
+              })),
+              onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
+            },
+          }),
+        ),
+      ),
+      execFunc("setTimeout", [
+        defineFunc(
+          {
+            body: statements(
+              assign(
+                tmpRefs.obj,
+                prop(domElementIds.playerHand, "lastChild", "style"),
+              ),
+              assign(prop(tmpRefs.obj, "animation"), Text("")),
+              assign(
+                prop(tmpRefs.obj, "left"),
+                mul(prop(state.playerHandCards, "length"), 64), // TODO: calc in CSS instead
+              ),
+              assign(
+                prop(tmpRefs.obj, "top"),
+                prop(
+                  execFunc(
+                    dynamicProp(
+                      domElementIds.playerHand,
+                      constants.getBoundingClientRect,
+                    ),
+                  ),
+                  "top",
+                ),
+              ),
+              assign(
+                prop(domElementIds.playerHand, "lastChild", "className"),
+                Text(ClassName.InteractiveCard), // TODO: on click instead of hover
+              ),
+              execFunc(
+                prop(state.playerHandCards, "push"),
+                tmpRefs.currentCard,
+              ),
+            ),
+          },
+        ),
+        600,
+      ]),
+    ),
+    ")",
+  );
+}
+
+function draw13Card() {
+  return execFunc(functions.goToGameOverPage);
 }
 
 export function defineDrawRevealedCard() {
