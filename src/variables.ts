@@ -17,10 +17,8 @@ export const {
     functions: {
       goToMenuPage: "",
       goToGamePage: "",
-      goToPerksPage: "",
       goToGameOverPage: "",
       refreshLevelCounter: "",
-      refreshPerkPointsCounter: "",
       refreshMoneyCounters: "",
       cardReveal: "",
       drawRevealedCard: "",
@@ -29,7 +27,6 @@ export const {
       page: "",
       playerHand: "",
       levelCounter: "",
-      perkPointsCounter: "",
       gameMoneyCounter: "",
       shopMoneyCounter: "",
       deck: "",

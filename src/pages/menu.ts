@@ -12,21 +12,13 @@ export function defineMenuPage() {
           [
             element(Elements.bigTitle, {
               children: "🃏",
-              tagProps: { style: formatStyle({ fontSize: 256 }) },
+              tagProps: { style: formatStyle({ fontSize: 320 }) },
             }),
             element(Elements.button, {
               tagProps: {
                 onclick: execFunc(functions.goToGamePage),
               },
               children: "Play",
-            }),
-            element(Elements.button, {
-              tagProps: {
-                onclick: execFunc(functions.goToPerksPage),
-                style: formatStyle({ margin: 24 }),
-              },
-              children: "Perks",
-              closed: false,
             }),
           ],
         ),

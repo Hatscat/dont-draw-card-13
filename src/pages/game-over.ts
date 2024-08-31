@@ -16,19 +16,13 @@ export function defineGameOverPage() {
               id: domElementIds.levelCounter,
             },
           }),
-          element(Elements.paragraph, {
-            tagProps: {
-              id: domElementIds.perkPointsCounter,
-            },
-          }),
           element(Elements.button, {
-            tagProps: { onclick: execFunc(functions.goToPerksPage) },
+            tagProps: { onclick: execFunc(functions.goToMenuPage) },
             children: "Continue",
             closed: false,
           }),
         ]),
         execFunc(functions.refreshLevelCounter),
-        execFunc(functions.refreshPerkPointsCounter),
       ),
     },
   );

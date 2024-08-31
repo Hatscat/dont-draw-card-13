@@ -29,7 +29,6 @@ enum ActionType {
   Discard,
   UseJoker,
   BuyCard,
-  BuyPerk,
 }
 
 type Action<T = ActionType> =
@@ -50,10 +49,6 @@ type Action<T = ActionType> =
       type: ActionType.BuyCard;
       payload: { card: string };
     }
-    | {
-      type: ActionType.BuyPerk;
-      payload: { perk: string };
-    }
   );
 
 export const actions = {
@@ -72,10 +67,6 @@ export const actions = {
     type: ActionType.BuyCard,
     payload: { card },
   }),
-  buyPerk: (perk: string): Action<ActionType.BuyPerk> => ({
-    type: ActionType.BuyPerk,
-    payload: { perk },
-  }),
 } as const;
 
 function mutator(state: State, action: Action): string {
@@ -93,9 +84,6 @@ function mutator(state: State, action: Action): string {
       return "TODO";
     }
     case ActionType.BuyCard: {
-      return "TODO";
-    }
-    case ActionType.BuyPerk: {
       return "TODO";
     }
   }

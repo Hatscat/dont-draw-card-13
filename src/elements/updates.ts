@@ -38,18 +38,6 @@ export function defineLevelCounterRefresh() {
   );
 }
 
-export function definePerkPointsCounterRefresh() {
-  return defineFunc(
-    {
-      name: functions.refreshPerkPointsCounter,
-      body: assign(
-        prop(domElementIds.perkPointsCounter, "innerHTML"),
-        add(Text("⭐️ "), state.perkPoints),
-      ),
-    },
-  );
-}
-
 export function defineMoneyCountersRefresh() {
   return defineFunc(
     {

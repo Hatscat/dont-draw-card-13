@@ -34,7 +34,6 @@ import {
   state,
   tmpRefs,
 } from "./variables.ts";
-import { definePerksPage } from "./pages/perks.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
@@ -43,7 +42,6 @@ import {
   defineDrawRevealedCard,
   defineLevelCounterRefresh,
   defineMoneyCountersRefresh,
-  definePerkPointsCounterRefresh,
 } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
@@ -75,11 +73,9 @@ function getScript(): string {
     defineBaseCards(),
     // Declare functions
     defineMenuPage(),
-    definePerksPage(),
     defineGamePage(),
     defineGameOverPage(),
     defineLevelCounterRefresh(),
-    definePerkPointsCounterRefresh(),
     defineMoneyCountersRefresh(),
     defineCardReveal(),
     defineDrawRevealedCard(),
