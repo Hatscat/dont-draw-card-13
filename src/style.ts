@@ -1,8 +1,9 @@
 import { animations, domElementIds, Elements } from "./variables.ts";
-import { formatStylesheet, Text } from "./deps.ts";
+import { font, formatStylesheet, Text } from "./deps.ts";
 
 export const enum ClassName {
   InteractiveCard = "a",
+  GameOver = "b",
 }
 
 export function getStylesheet() {
@@ -11,7 +12,18 @@ export function getStylesheet() {
       "0%": { transform: "scaleX(-1)", background: "#000" },
       "20%": { background: "#000" },
       "50%": { background: "#FFF" },
-      "100%": {},
+    }),
+    [`@keyframes ${animations.gameOver}`]: formatStylesheet({
+      "0%": { filter: "none", color: "#0000" },
+      "100%": {
+        filter: "blur(7px)",
+        color: "#F00",
+        fontSize: 777,
+      },
+    }),
+    [`@keyframes ${animations.screenShake}`]: formatStylesheet({
+      "33%": { transform: "rotate(2deg)" },
+      "77%": { transform: "rotate(-2deg)" },
     }),
     body: { background: "#111" },
     [list(Elements.page, `${Elements.page} *`)]: {
@@ -91,6 +103,15 @@ export function getStylesheet() {
     },
     [`.${ClassName.InteractiveCard}:active`]: {
       transform: "translateY(-66%)",
+    },
+    [`.${ClassName.GameOver}`]: {
+      pointerEvents: "none",
+      animation:
+        `5s ${animations.gameOver}, .1s ${animations.screenShake} infinite`,
+    },
+    [`.${ClassName.GameOver}::after`]: {
+      content: Text("13"),
+      position: "fixed",
     },
   });
 }

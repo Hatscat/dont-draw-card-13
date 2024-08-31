@@ -57,6 +57,8 @@ export function defineMoneyCountersRefresh() {
 }
 
 export function defineCardReveal() {
+  const deckBox = tmpRefs.obj;
+  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
   const setDeckBox = assign(
     tmpRefs.obj,
     execFunc(
@@ -76,6 +78,34 @@ export function defineCardReveal() {
           tmpRefs.currentCard,
           execFunc(prop(data.deckCards, "pop")),
         ),
+        assign(
+          playerHandHtml,
+          add(
+            playerHandHtml,
+            element(Elements.card, {
+              as: "templateLiteral",
+              children: ifElse(
+                isGreater(prop(tmpRefs.currentCard, "length"), 2),
+                element(Elements.emojiCard, {
+                  as: "templateLiteral",
+                  children: tmpRefs.currentCard,
+                }),
+                element(Elements.textCard, {
+                  as: "templateLiteral",
+                  children: tmpRefs.currentCard,
+                }),
+              ),
+              tagProps: {
+                style: Text(formatStyle({
+                  left: templateExpression(prop(deckBox, "left")),
+                  top: templateExpression(prop(deckBox, "top")),
+                  animation: `.5s ${animations.cardReveal}`,
+                })),
+                onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
+              },
+            }),
+          ),
+        ),
         ifElse(
           isDifferent(
             dynamicProp(constants.cardValues, tmpRefs.currentCard),
@@ -90,39 +120,8 @@ export function defineCardReveal() {
 }
 
 function drawValidCard() {
-  const deckBox = tmpRefs.obj;
-  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
-
   return group(
     expressions(
-      assign(
-        playerHandHtml,
-        add(
-          playerHandHtml,
-          element(Elements.card, {
-            as: "templateLiteral",
-            children: ifElse(
-              isGreater(prop(tmpRefs.currentCard, "length"), 2),
-              element(Elements.emojiCard, {
-                as: "templateLiteral",
-                children: tmpRefs.currentCard,
-              }),
-              element(Elements.textCard, {
-                as: "templateLiteral",
-                children: tmpRefs.currentCard,
-              }),
-            ),
-            tagProps: {
-              style: Text(formatStyle({
-                left: templateExpression(prop(deckBox, "left")),
-                top: templateExpression(prop(deckBox, "top")),
-                animation: `0.5s ${animations.cardReveal}`,
-              })),
-              onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
-            },
-          }),
-        ),
-      ),
       execFunc("setTimeout", [
         defineFunc(
           {
@@ -167,7 +166,23 @@ function drawValidCard() {
 }
 
 function draw13Card() {
-  return execFunc(functions.goToGameOverPage);
+  return group(expressions(
+    assign(
+      prop(domElementIds.page, "className"),
+      Text(ClassName.GameOver),
+    ),
+    execFunc("setTimeout", [
+      defineFunc(
+        {
+          body: statements(
+            assign(prop(domElementIds.page, "className"), Text("")),
+            execFunc(functions.goToGameOverPage),
+          ),
+        },
+      ),
+      5000,
+    ]),
+  ));
 }
 
 export function defineDrawRevealedCard() {

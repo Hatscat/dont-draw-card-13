@@ -56,6 +56,8 @@ export const {
     },
     animations: {
       cardReveal: "",
+      gameOver: "",
+      screenShake: "",
     },
   } as const,
 );
