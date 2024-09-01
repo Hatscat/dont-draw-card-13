@@ -39,9 +39,9 @@ import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
 import {
   defineCardReveal,
-  defineDrawRevealedCard,
   defineLevelCounterRefresh,
   defineMoneyCountersRefresh,
+  defineOpenCardModal,
 } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
@@ -78,7 +78,7 @@ function getScript(): string {
     defineLevelCounterRefresh(),
     defineMoneyCountersRefresh(),
     defineCardReveal(),
-    defineDrawRevealedCard(),
+    defineOpenCardModal(),
     // Init the state
     assign(
       data.deckCards,
@@ -107,6 +107,7 @@ function defineBaseCards() {
         statements(
           // value for classic cards
           assign(tmpRefs.n, execFunc(prop("Math", "min"), [tmpRefs.index, 10])),
+          // assign(tmpRefs.n, 13), // TODO: TMP, only 13 cards for now
           // html codes for card emojis
           assign(
             tmpRefs.item,

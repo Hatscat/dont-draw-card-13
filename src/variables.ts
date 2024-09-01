@@ -21,7 +21,7 @@ export const {
       refreshLevelCounter: "",
       refreshMoneyCounters: "",
       cardReveal: "",
-      drawRevealedCard: "",
+      openCardModal: "", // TODO: to remove
     },
     domElementIds: {
       page: "",
@@ -31,9 +31,10 @@ export const {
       shopMoneyCounter: "",
       deck: "",
       discardPile: "",
-      giveUpButton: "",
-      cardShopButton: "",
+      giveUpButton: "", // TODO: remove? or for tutorial?
+      cardShopButton: "", // TODO: remove? or for tutorial?
       cardShopDialog: "",
+      cardDialog: "",
     },
     params: {
       // item: "",

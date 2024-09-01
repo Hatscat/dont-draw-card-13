@@ -85,7 +85,7 @@ export function defineCardReveal() {
             element(Elements.card, {
               as: "templateLiteral",
               children: ifElse(
-                isGreater(prop(tmpRefs.currentCard, "length"), 2),
+                isGreater(prop(tmpRefs.currentCard, "length"), 2), // TODO: to change with joker cards (emojis too but with few chars, maybe isNaN?)
                 element(Elements.emojiCard, {
                   as: "templateLiteral",
                   children: tmpRefs.currentCard,
@@ -101,7 +101,14 @@ export function defineCardReveal() {
                   top: templateExpression(prop(deckBox, "top")),
                   animation: `.5s ${animations.cardReveal}`,
                 })),
-                onclick: execFunc(functions.drawRevealedCard), // TODO: open card menu
+                // onclick: execFunc(functions.openCardModal), // TODO: no need to have a dedicated func in fact
+                onclick: statements(
+                  assign(
+                    tmpRefs.currentCard, // TODO: assign the modal elem
+                    Text(templateExpression(tmpRefs.currentCard)),
+                  ),
+                  execFunc(prop(domElementIds.cardDialog, "showModal")),
+                ),
               },
             }),
           ),
@@ -133,7 +140,7 @@ function drawValidCard() {
               assign(prop(tmpRefs.obj, "animation"), Text("")),
               assign(
                 prop(tmpRefs.obj, "left"),
-                mul(prop(state.playerHandCards, "length"), 64), // TODO: calc in CSS instead
+                mul(prop(state.playerHandCards, "length"), 77), // TODO: calc in CSS instead
               ),
               assign(
                 prop(tmpRefs.obj, "top"),
@@ -149,7 +156,7 @@ function drawValidCard() {
               ),
               assign(
                 prop(domElementIds.playerHand, "lastChild", "className"),
-                Text(ClassName.InteractiveCard), // TODO: on click instead of hover
+                Text(ClassName.InteractiveCard),
               ),
               execFunc(
                 prop(state.playerHandCards, "push"),
@@ -185,10 +192,10 @@ function draw13Card() {
   ));
 }
 
-export function defineDrawRevealedCard() {
+export function defineOpenCardModal() {
   return defineFunc(
     {
-      name: functions.drawRevealedCard,
+      name: functions.openCardModal,
       body: "console.log('drawRevealedCard')",
     },
   );

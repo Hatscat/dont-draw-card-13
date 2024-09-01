@@ -1,4 +1,3 @@
-import { actions, dispatch } from "../data-store/mutator.ts";
 import {
   and,
   defineFunc,
@@ -125,6 +124,31 @@ export function defineGamePage() {
                 tagProps: {
                   onclick: execFunc(
                     prop(domElementIds.cardShopDialog, "close"),
+                  ),
+                },
+              }),
+            ],
+          }),
+
+          // Card dialog
+          element("dialog", {
+            tagProps: {
+              id: domElementIds.cardDialog,
+            },
+            children: [
+              element(Elements.bigTitle, {
+                children: "Card", // current card
+              }),
+              element(Elements.paragraph, {
+                tagProps: {
+                  id: domElementIds.shopMoneyCounter, // current card value
+                },
+              }),
+              element(Elements.button, {
+                children: "Close",
+                tagProps: {
+                  onclick: execFunc(
+                    prop(domElementIds.cardDialog, "close"),
                   ),
                 },
               }),

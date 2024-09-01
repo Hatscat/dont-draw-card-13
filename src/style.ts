@@ -1,5 +1,5 @@
 import { animations, domElementIds, Elements } from "./variables.ts";
-import { font, formatStylesheet, Text } from "./deps.ts";
+import { formatStylesheet, Text } from "./deps.ts";
 
 export const enum ClassName {
   InteractiveCard = "a",
@@ -8,6 +8,7 @@ export const enum ClassName {
 
 export function getStylesheet() {
   return formatStylesheet({
+    // animations
     [`@keyframes ${animations.cardReveal}`]: formatStylesheet({
       "0%": { transform: "scaleX(-1)", background: "#000" },
       "20%": { background: "#000" },
@@ -25,6 +26,7 @@ export function getStylesheet() {
       "33%": { transform: "rotate(2deg)" },
       "77%": { transform: "rotate(-2deg)" },
     }),
+    // general
     body: { background: "#111" },
     [list(Elements.page, `${Elements.page} *`)]: {
       color: "#EEE",
@@ -40,6 +42,11 @@ export function getStylesheet() {
     [directChildren(Elements.page)]: {
       minWidth: 256,
     },
+    [Elements.bigTitle]: {
+      fontSize: 48,
+      margin: 16,
+    },
+    // buttons
     [list(Elements.interactive, Elements.button, Elements.card)]: {
       cursor: "pointer",
     },
@@ -50,20 +57,19 @@ export function getStylesheet() {
     [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
     },
-    [Elements.bigTitle]: {
-      fontSize: 48,
-      margin: 16,
-    },
-    [id(domElementIds.cardShopDialog)]: {
+
+    // modals
+    dialog: {
       display: "none",
     },
-    [`${id(domElementIds.cardShopDialog)}[open]`]: {
+    "dialog[open]": {
       display: "flex",
       background: "#000",
     },
     ["::backdrop"]: {
       background: "#7777",
     },
+    // cards, deck and discard pile
     [list(Elements.card, id(domElementIds.deck))]: {
       borderRadius: "24px",
       height: 360,
@@ -72,8 +78,7 @@ export function getStylesheet() {
     },
     [id(domElementIds.deck)]: {
       background: "#FFF",
-      outline: "2px double",
-      boxShadow: "0 0 4px 4px #777",
+      outline: "4px double #777",
     },
     [Elements.card]: {
       background: "#FFF",
@@ -98,12 +103,18 @@ export function getStylesheet() {
       width: 128,
     },
     [id(domElementIds.playerHand)]: {
+      // width: "100%",
       height: 192,
       margin: 24,
     },
-    [`.${ClassName.InteractiveCard}:active`]: {
-      transform: "translateY(-66%)",
+    // [`.${ClassName.InteractiveCard}`]: {
+    // position: "relative", // do not work... need to re-calculate fixed positions
+    // },
+    [`.${ClassName.InteractiveCard}:hover`]: {
+      transform: "translateY(-7%)",
+      zIndex: 7,
     },
+    // game over
     [`.${ClassName.GameOver}`]: {
       pointerEvents: "none",
       animation:
@@ -113,6 +124,8 @@ export function getStylesheet() {
       content: Text("13"),
       position: "fixed",
     },
+    // victory
+    // TODO: victory animation
   });
 }
 
