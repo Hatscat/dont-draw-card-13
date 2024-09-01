@@ -9,10 +9,12 @@ import {
   formatStyle,
   group,
   ifElse,
+  ifThen,
   isDifferent,
   isGreater,
   mul,
   prop,
+  setInnerHtml,
   statements,
   templateExpression,
   Text,
@@ -45,11 +47,20 @@ export function defineMoneyCountersRefresh() {
   return defineFunc(
     {
       name: functions.refreshMoneyCounters,
-      body: assign(
-        prop(domElementIds.shopMoneyCounter, "innerHTML"),
+      body: statements(
         assign(
-          prop(domElementIds.gameMoneyCounter, "innerHTML"),
-          add(Text("💰 "), state.money),
+          tmpRefs.n,
+          assign(
+            prop(domElementIds.gameMoneyCounter, "innerHTML"),
+            add(Text("💰 "), state.money),
+          ),
+        ),
+        ifThen(
+          prop("window", domElementIds.shopMoneyCounter),
+          assign(
+            prop(domElementIds.shopMoneyCounter, "innerHTML"),
+            tmpRefs.n,
+          ),
         ),
       ),
     },
@@ -101,14 +112,7 @@ export function defineCardReveal() {
                   top: templateExpression(prop(deckBox, "top")),
                   animation: `.5s ${animations.cardReveal}`,
                 })),
-                // onclick: execFunc(functions.openCardModal), // TODO: no need to have a dedicated func in fact
-                onclick: statements(
-                  assign(
-                    tmpRefs.currentCard, // TODO: assign the modal elem
-                    Text(templateExpression(tmpRefs.currentCard)),
-                  ),
-                  execFunc(prop(domElementIds.cardDialog, "showModal")),
-                ),
+                onclick: execFunc(functions.openCardModal),
               },
             }),
           ),
@@ -193,10 +197,74 @@ function draw13Card() {
 }
 
 export function defineOpenCardModal() {
+  const modalElements = [
+    element(Elements.flexWithoutStyle, {
+      children: templateExpression(tmpRefs.currentCard),
+      tagProps: {
+        style: formatStyle({
+          fontSize: 128,
+        }),
+      },
+    }),
+    element(Elements.paragraph, {
+      children: [
+        "Value: ",
+        templateExpression(
+          dynamicProp(constants.cardValues, tmpRefs.currentCard),
+        ),
+      ],
+    }),
+    element(Elements.button, {
+      children: "Close",
+      tagProps: {
+        onclick: execFunc(
+          prop(domElementIds.modal, "close"),
+        ),
+      },
+    }),
+  ];
   return defineFunc(
     {
       name: functions.openCardModal,
-      body: "console.log('drawRevealedCard')",
+      body: statements(
+        assign(
+          prop(domElementIds.modal, "innerHTML"),
+          "`" + modalElements.join("") + "`",
+        ),
+        execFunc(prop(domElementIds.modal, "showModal")),
+      ),
+    },
+  );
+}
+
+export function defineOpenShopModal() {
+  return defineFunc(
+    {
+      name: functions.openShopModal,
+      body: statements(
+        setInnerHtml(domElementIds.modal, [
+          element(Elements.bigTitle, {
+            children: "Card Shop",
+          }),
+          element(Elements.paragraph, {
+            tagProps: {
+              id: domElementIds.shopMoneyCounter,
+            },
+          }),
+          element(Elements.button, {
+            children: "Close",
+            tagProps: {
+              onclick: execFunc(
+                prop(domElementIds.modal, "close"),
+              ),
+            },
+          }),
+        ]),
+        execFunc(functions.refreshMoneyCounters),
+        execFunc(
+          prop(domElementIds.modal, "showModal"),
+        ),
+      ),
     },
   );
 }

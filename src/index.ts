@@ -42,6 +42,7 @@ import {
   defineLevelCounterRefresh,
   defineMoneyCountersRefresh,
   defineOpenCardModal,
+  defineOpenShopModal,
 } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
@@ -79,6 +80,7 @@ function getScript(): string {
     defineMoneyCountersRefresh(),
     defineCardReveal(),
     defineOpenCardModal(),
+    defineOpenShopModal(),
     // Init the state
     assign(
       data.deckCards,

@@ -3,9 +3,9 @@ import {
   defineFunc,
   element,
   execFunc,
+  expressions,
   formatStyle,
   // INLINE_EVENT_ARG_NAME,
-  prop,
   setInnerHtml,
   statements,
   Text,
@@ -18,85 +18,9 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          // Title
-          element(Elements.bigTitle, {
-            children: "Don't draw card 13!",
-          }),
+          ...headerElements(),
 
-          // Level counter and give up button
-          element(Elements.paragraph, {
-            tagProps: {
-              style: formatStyle({
-                flexDirection: "row",
-                marginBottom: 32,
-                gap: "24px",
-              }),
-            },
-            children: [
-              element(Elements.flexWithoutStyle, {
-                tagProps: {
-                  id: domElementIds.levelCounter,
-                },
-              }),
-              element(Elements.button, {
-                tagProps: {
-                  id: domElementIds.giveUpButton,
-                  onclick: Text(and(
-                    execFunc("confirm", Text("Give up this game?")),
-                    execFunc(functions.goToGameOverPage),
-                  )),
-                },
-                children: "❌ Give up",
-              }),
-            ],
-          }),
-
-          // Game area
-          element(Elements.flexWithoutStyle, {
-            tagProps: {
-              style: formatStyle({
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                gap: "8px",
-                alignItems: "start",
-              }),
-            },
-            children: [
-              // Card shop button
-              element(Elements.button, {
-                children: [
-                  "<br>Card Shop",
-                  element(Elements.paragraph, {
-                    tagProps: {
-                      id: domElementIds.gameMoneyCounter,
-                    },
-                  }),
-                ],
-                tagProps: {
-                  id: domElementIds.cardShopButton,
-                  onclick: execFunc(
-                    prop(domElementIds.cardShopDialog, "showModal"),
-                  ),
-                },
-              }),
-              // Deck
-              element(Elements.interactive, {
-                children: "Draw",
-                tagProps: {
-                  id: domElementIds.deck,
-                  onclick: execFunc(functions.cardReveal),
-                },
-              }),
-              // Discard pile
-              element(Elements.flexWithoutStyle, {
-                tagProps: {
-                  id: domElementIds.discardPile,
-                },
-                children: "Discard<br>Pile",
-              }),
-            ],
-          }),
+          gameArea(),
 
           // Player hand
           element(Elements.flexWithoutStyle, {
@@ -105,54 +29,11 @@ export function defineGamePage() {
             },
           }),
 
-          // Card shop dialog
+          // Modal for card and shop
           element("dialog", {
             tagProps: {
-              id: domElementIds.cardShopDialog,
+              id: domElementIds.modal,
             },
-            children: [
-              element(Elements.bigTitle, {
-                children: "Card Shop",
-              }),
-              element(Elements.paragraph, {
-                tagProps: {
-                  id: domElementIds.shopMoneyCounter,
-                },
-              }),
-              element(Elements.button, {
-                children: "Close",
-                tagProps: {
-                  onclick: execFunc(
-                    prop(domElementIds.cardShopDialog, "close"),
-                  ),
-                },
-              }),
-            ],
-          }),
-
-          // Card dialog
-          element("dialog", {
-            tagProps: {
-              id: domElementIds.cardDialog,
-            },
-            children: [
-              element(Elements.bigTitle, {
-                children: "Card", // current card
-              }),
-              element(Elements.paragraph, {
-                tagProps: {
-                  id: domElementIds.shopMoneyCounter, // current card value
-                },
-              }),
-              element(Elements.button, {
-                children: "Close",
-                tagProps: {
-                  onclick: execFunc(
-                    prop(domElementIds.cardDialog, "close"),
-                  ),
-                },
-              }),
-            ],
           }),
         ]),
         // refresh counters
@@ -161,4 +42,86 @@ export function defineGamePage() {
       ),
     },
   );
+}
+
+function headerElements() {
+  return [
+    // Title
+    element(Elements.bigTitle, {
+      children: "Don't draw card 13!",
+    }),
+    // Level counter and give up button
+    element(Elements.paragraph, {
+      tagProps: {
+        style: formatStyle({
+          flexDirection: "row",
+          marginBottom: 32,
+          gap: "24px",
+        }),
+      },
+      children: [
+        element(Elements.flexWithoutStyle, {
+          tagProps: {
+            id: domElementIds.levelCounter,
+          },
+        }),
+        element(Elements.button, {
+          tagProps: {
+            id: domElementIds.giveUpButton,
+            onclick: Text(and(
+              execFunc("confirm", Text("Give up this game?")),
+              execFunc(functions.goToGameOverPage),
+            )),
+          },
+          children: "❌ Give up",
+        }),
+      ],
+    }),
+  ];
+}
+
+function gameArea() {
+  return element(Elements.flexWithoutStyle, {
+    tagProps: {
+      style: formatStyle({
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        gap: "8px",
+        alignItems: "start",
+      }),
+    },
+    children: [
+      // Card shop button
+      element(Elements.button, {
+        children: [
+          "<br>Card Shop",
+          element(Elements.paragraph, {
+            tagProps: {
+              id: domElementIds.gameMoneyCounter,
+            },
+          }),
+        ],
+        tagProps: {
+          id: domElementIds.cardShopButton,
+          onclick: execFunc(functions.openShopModal),
+        },
+      }),
+      // Deck
+      element(Elements.interactive, {
+        children: "Draw",
+        tagProps: {
+          id: domElementIds.deck,
+          onclick: execFunc(functions.cardReveal),
+        },
+      }),
+      // Discard pile
+      element(Elements.flexWithoutStyle, {
+        tagProps: {
+          id: domElementIds.discardPile,
+        },
+        children: "Discard<br>Pile",
+      }),
+    ],
+  });
 }

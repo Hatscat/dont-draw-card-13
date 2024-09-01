@@ -83,7 +83,7 @@ export function getStylesheet() {
     [Elements.card]: {
       background: "#FFF",
       position: "fixed",
-      border: "4px solid",
+      outline: "4px solid",
     },
     [`${Elements.card}>*`]: {
       fontSize: 88,
