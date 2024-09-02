@@ -37,7 +37,7 @@ export function getStylesheet() {
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
-      transition: "all 1s ease",
+      transition: "all .7s",
     },
     [directChildren(Elements.page)]: {
       minWidth: 256,
