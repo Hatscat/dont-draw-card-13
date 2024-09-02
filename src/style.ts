@@ -103,13 +103,9 @@ export function getStylesheet() {
       width: 128,
     },
     [id(domElementIds.playerHand)]: {
-      // width: "100%",
-      height: 192,
+      height: 360,
       margin: 24,
     },
-    // [`.${ClassName.InteractiveCard}`]: {
-    // position: "relative", // do not work... need to re-calculate fixed positions
-    // },
     [`.${ClassName.InteractiveCard}:hover`]: {
       transform: "translateY(-7%)",
       zIndex: 7,

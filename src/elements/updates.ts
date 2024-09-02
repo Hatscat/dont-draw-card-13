@@ -282,7 +282,13 @@ export function definePositionHandCards() {
       ),
       body: assign(
         prop(tmpRefs.item, "style", "left"),
-        mul(div("innerWidth", tmpRefs.n), tmpRefs.index),
+        mul(
+          div(
+            execFunc("Math.min", ["innerWidth", mul(tmpRefs.n, 256)]),
+            tmpRefs.n,
+          ),
+          tmpRefs.index,
+        ),
       ),
       body2: assign(
         prop(tmpRefs.item, "style", "top"),

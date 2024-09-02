@@ -85,9 +85,9 @@ function getScript(): string {
     assign(
       data.deckCards,
       execFunc(
-        prop(execFunc(prop("Object", "keys"), constants.cardValues), "sort"),
+        prop(execFunc("Object.keys", constants.cardValues), "sort"),
         defineFunc({
-          body: sub(execFunc(prop("Math", "random")), ".5"),
+          body: sub(execFunc("Math.random"), ".5"),
           safe: false,
         }),
       ),
@@ -108,7 +108,7 @@ function defineBaseCards() {
       body: group(
         statements(
           // value for classic cards
-          assign(tmpRefs.n, execFunc(prop("Math", "min"), [tmpRefs.index, 10])),
+          assign(tmpRefs.n, execFunc("Math.min", [tmpRefs.index, 10])),
           // assign(tmpRefs.n, 13), // TODO: TMP, only 13 cards for now
           // html codes for card emojis
           assign(
