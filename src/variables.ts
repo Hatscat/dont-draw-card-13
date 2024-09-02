@@ -53,7 +53,8 @@ export const {
       deckCards: "",
     },
     constants: {
-      getBoundingClientRect: "",
+      getBoundingClientRect: "getBoundingClientRect",
+      fromCharCode: "String.fromCharCode",
       cardValues: "",
     },
     animations: {

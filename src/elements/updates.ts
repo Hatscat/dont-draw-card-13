@@ -1,6 +1,7 @@
 import {
   add,
   assign,
+  castNumber,
   decrement,
   defineFunc,
   div,
@@ -13,7 +14,6 @@ import {
   ifElse,
   ifThen,
   isDifferent,
-  isGreater,
   loop,
   mul,
   prop,
@@ -99,12 +99,12 @@ export function defineCardReveal() {
             element(Elements.card, {
               as: "templateLiteral",
               children: ifElse(
-                isGreater(prop(tmpRefs.currentCard, "length"), 2), // TODO: to change with joker cards (emojis too but with few chars, maybe isNaN?)
-                element(Elements.emojiCard, {
+                castNumber(tmpRefs.currentCard),
+                element(Elements.textCard, {
                   as: "templateLiteral",
                   children: tmpRefs.currentCard,
                 }),
-                element(Elements.textCard, {
+                element(Elements.emojiCard, {
                   as: "templateLiteral",
                   children: tmpRefs.currentCard,
                 }),

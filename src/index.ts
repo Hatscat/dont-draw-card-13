@@ -5,13 +5,14 @@ import {
   dynamicProp,
   element,
   group,
+  ifElse,
   ifThen,
   increment,
   initVariables,
+  isDifferent,
   isGreater,
   isLess,
   loop,
-  or,
   prop,
   Record,
   SrcProps,
@@ -70,6 +71,7 @@ function getScript(): string {
     // registerServiceWorker(), // TODO: useful for JS13K?
     // Assign constants
     assign(constants.getBoundingClientRect, Text("getBoundingClientRect")),
+    assign(constants.fromCharCode, "String.fromCharCode"),
     defineBaseCards(),
     // Declare functions
     defineMenuPage(),
@@ -101,7 +103,7 @@ function getScript(): string {
 function defineBaseCards() {
   return statements(
     assign(constants.cardValues, Record({})),
-    assign(tmpRefs.obj, Text("&#x1F0")),
+    assign(tmpRefs.obj, 0xD83C),
     loop({
       init: assign(tmpRefs.index, 0),
       condition: isLess(increment(tmpRefs.index), 13),
@@ -113,16 +115,16 @@ function defineBaseCards() {
           // html codes for card emojis
           assign(
             tmpRefs.item,
-            or(
-              dynamicProp(Text("EDBA"), sub(13, tmpRefs.index)),
-              tmpRefs.index,
-            ),
+            ifElse(isDifferent(tmpRefs.index, 12), tmpRefs.index, 14),
           ),
           // spades
           assign(
             dynamicProp(
               constants.cardValues,
-              add(tmpRefs.obj, Text("A"), tmpRefs.item),
+              execFunc(constants.fromCharCode, [
+                tmpRefs.obj,
+                add(0xDCA0, tmpRefs.item),
+              ]),
             ),
             tmpRefs.n,
           ),
@@ -130,7 +132,10 @@ function defineBaseCards() {
           assign(
             dynamicProp(
               constants.cardValues,
-              add(tmpRefs.obj, Text("B"), tmpRefs.item),
+              execFunc(constants.fromCharCode, [
+                tmpRefs.obj,
+                add(0xDCB0, tmpRefs.item),
+              ]),
             ),
             tmpRefs.n,
           ),
@@ -138,7 +143,10 @@ function defineBaseCards() {
           assign(
             dynamicProp(
               constants.cardValues,
-              add(tmpRefs.obj, Text("C"), tmpRefs.item),
+              execFunc(constants.fromCharCode, [
+                tmpRefs.obj,
+                add(0xDCC0, tmpRefs.item),
+              ]),
             ),
             tmpRefs.n,
           ),
@@ -146,7 +154,10 @@ function defineBaseCards() {
           assign(
             dynamicProp(
               constants.cardValues,
-              add(tmpRefs.obj, Text("D"), tmpRefs.item),
+              execFunc(constants.fromCharCode, [
+                tmpRefs.obj,
+                add(0xDCD0, tmpRefs.item),
+              ]),
             ),
             tmpRefs.n,
           ),
