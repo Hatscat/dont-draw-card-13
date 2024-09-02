@@ -59,10 +59,10 @@ export function getStylesheet() {
     },
 
     // modals
-    dialog: {
+    [id(domElementIds.modal)]: {
       display: "none",
     },
-    "dialog[open]": {
+    [`${id(domElementIds.modal)}[open]`]: {
       display: "flex",
       background: "#000",
     },

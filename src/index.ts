@@ -1,8 +1,6 @@
 import {
   add,
-  and,
   assign,
-  decrement,
   defineFunc,
   dynamicProp,
   element,
@@ -43,6 +41,7 @@ import {
   defineMoneyCountersRefresh,
   defineOpenCardModal,
   defineOpenShopModal,
+  definePositionHandCards,
 } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
@@ -81,6 +80,7 @@ function getScript(): string {
     defineCardReveal(),
     defineOpenCardModal(),
     defineOpenShopModal(),
+    definePositionHandCards(),
     // Init the state
     assign(
       data.deckCards,

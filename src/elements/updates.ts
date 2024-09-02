@@ -1,7 +1,9 @@
 import {
   add,
   assign,
+  decrement,
   defineFunc,
+  div,
   dynamicProp,
   element,
   execFunc,
@@ -12,6 +14,7 @@ import {
   ifThen,
   isDifferent,
   isGreater,
+  loop,
   mul,
   prop,
   setInnerHtml,
@@ -112,7 +115,13 @@ export function defineCardReveal() {
                   top: templateExpression(prop(deckBox, "top")),
                   animation: `.5s ${animations.cardReveal}`,
                 })),
-                onclick: execFunc(functions.openCardModal),
+                onclick: expressions(
+                  assign(
+                    tmpRefs.currentCard,
+                    Text(templateExpression(tmpRefs.currentCard)),
+                  ),
+                  execFunc(functions.openCardModal),
+                ),
               },
             }),
           ),
@@ -137,34 +146,23 @@ function drawValidCard() {
         defineFunc(
           {
             body: statements(
-              assign(
-                tmpRefs.obj,
-                prop(domElementIds.playerHand, "lastChild", "style"),
+              execFunc(
+                prop(state.playerHandCards, "push"),
+                tmpRefs.currentCard,
               ),
-              assign(prop(tmpRefs.obj, "animation"), Text("")),
+              execFunc(functions.positionHandCards),
               assign(
-                prop(tmpRefs.obj, "left"),
-                mul(prop(state.playerHandCards, "length"), 77), // TODO: calc in CSS instead
-              ),
-              assign(
-                prop(tmpRefs.obj, "top"),
                 prop(
-                  execFunc(
-                    dynamicProp(
-                      domElementIds.playerHand,
-                      constants.getBoundingClientRect,
-                    ),
-                  ),
-                  "top",
+                  domElementIds.playerHand,
+                  "lastChild",
+                  "style",
+                  "animation",
                 ),
+                Text(""),
               ),
               assign(
                 prop(domElementIds.playerHand, "lastChild", "className"),
                 Text(ClassName.InteractiveCard),
-              ),
-              execFunc(
-                prop(state.playerHandCards, "push"),
-                tmpRefs.currentCard,
               ),
             ),
           },
@@ -202,7 +200,7 @@ export function defineOpenCardModal() {
       children: templateExpression(tmpRefs.currentCard),
       tagProps: {
         style: formatStyle({
-          fontSize: 128,
+          fontSize: 200,
         }),
       },
     }),
@@ -223,6 +221,7 @@ export function defineOpenCardModal() {
       },
     }),
   ];
+
   return defineFunc(
     {
       name: functions.openCardModal,
@@ -267,4 +266,36 @@ export function defineOpenShopModal() {
       ),
     },
   );
+}
+
+export function definePositionHandCards() {
+  return defineFunc({
+    name: functions.positionHandCards,
+    body: loop({
+      init: expressions(
+        assign(tmpRefs.obj, prop(domElementIds.playerHand, "children")),
+        assign(tmpRefs.n, assign(tmpRefs.index, prop(tmpRefs.obj, "length"))),
+      ),
+      condition: assign(
+        tmpRefs.item,
+        dynamicProp(tmpRefs.obj, decrement(tmpRefs.index, 1, { before: true })),
+      ),
+      body: assign(
+        prop(tmpRefs.item, "style", "left"),
+        mul(div("innerWidth", tmpRefs.n), tmpRefs.index),
+      ),
+      body2: assign(
+        prop(tmpRefs.item, "style", "top"),
+        prop(
+          execFunc(
+            dynamicProp(
+              domElementIds.playerHand,
+              constants.getBoundingClientRect,
+            ),
+          ),
+          "top",
+        ),
+      ),
+    }),
+  });
 }
