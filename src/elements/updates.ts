@@ -1,3 +1,4 @@
+import { config } from "../config.ts";
 import {
   add,
   assign,
@@ -19,6 +20,7 @@ import {
   prop,
   setInnerHtml,
   statements,
+  sub,
   templateExpression,
   Text,
 } from "../deps.ts";
@@ -55,7 +57,7 @@ export function defineMoneyCountersRefresh() {
           tmpRefs.n,
           assign(
             prop(domElementIds.gameMoneyCounter, "innerHTML"),
-            add(Text("💰 "), state.money),
+            add(Text("💰"), state.money),
           ),
         ),
         ifThen(
@@ -167,7 +169,7 @@ function drawValidCard() {
             ),
           },
         ),
-        600,
+        500,
       ]),
     ),
     ")",
@@ -196,6 +198,13 @@ function draw13Card() {
 
 export function defineOpenCardModal() {
   const modalElements = [
+    element(Elements.closeButton, {
+      tagProps: {
+        onclick: execFunc(
+          prop(domElementIds.modal, "close"),
+        ),
+      },
+    }),
     element(Elements.flexWithoutStyle, {
       children: templateExpression(tmpRefs.currentCard),
       tagProps: {
@@ -204,16 +213,13 @@ export function defineOpenCardModal() {
         }),
       },
     }),
-    element(Elements.paragraph, {
+    element(Elements.button, {
       children: [
-        "Value: ",
+        "Discard for 💰",
         templateExpression(
           dynamicProp(constants.cardValues, tmpRefs.currentCard),
         ),
       ],
-    }),
-    element(Elements.button, {
-      children: "Close",
       tagProps: {
         onclick: execFunc(
           prop(domElementIds.modal, "close"),
@@ -242,20 +248,19 @@ export function defineOpenShopModal() {
       name: functions.openShopModal,
       body: statements(
         setInnerHtml(domElementIds.modal, [
+          element(Elements.closeButton, {
+            tagProps: {
+              onclick: execFunc(
+                prop(domElementIds.modal, "close"),
+              ),
+            },
+          }),
           element(Elements.bigTitle, {
             children: "Card Shop",
           }),
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.shopMoneyCounter,
-            },
-          }),
-          element(Elements.button, {
-            children: "Close",
-            tagProps: {
-              onclick: execFunc(
-                prop(domElementIds.modal, "close"),
-              ),
             },
           }),
         ]),
@@ -282,12 +287,21 @@ export function definePositionHandCards() {
       ),
       body: assign(
         prop(tmpRefs.item, "style", "left"),
-        mul(
-          div(
-            execFunc("Math.min", ["innerWidth", mul(tmpRefs.n, 256)]),
-            tmpRefs.n,
+        add(
+          mul(
+            div(
+              execFunc("Math.min", [
+                "innerWidth",
+                mul(tmpRefs.n, config.cardWidth),
+              ]),
+              tmpRefs.n,
+            ),
+            tmpRefs.index,
           ),
-          tmpRefs.index,
+          execFunc("Math.max", [
+            0,
+            sub(div("innerWidth", 2), mul(tmpRefs.n, config.cardWidth / 2)),
+          ]),
         ),
       ),
       body2: assign(

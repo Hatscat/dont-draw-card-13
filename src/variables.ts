@@ -75,4 +75,5 @@ export const Elements = {
   card: "c",
   emojiCard: "e",
   textCard: "b",
+  closeButton: "x",
 } as const;

@@ -1,5 +1,6 @@
 import { animations, domElementIds, Elements } from "./variables.ts";
 import { formatStylesheet, Text } from "./deps.ts";
+import { config } from "./config.ts";
 
 export const enum ClassName {
   InteractiveCard = "a",
@@ -47,7 +48,14 @@ export function getStylesheet() {
       margin: 16,
     },
     // buttons
-    [list(Elements.interactive, Elements.button, Elements.card)]: {
+    [
+      list(
+        Elements.interactive,
+        Elements.button,
+        Elements.card,
+        Elements.closeButton,
+      )
+    ]: {
       cursor: "pointer",
     },
     [Elements.button]: {
@@ -57,7 +65,12 @@ export function getStylesheet() {
     [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
     },
-
+    [Elements.closeButton]: {
+      alignSelf: "flex-end",
+    },
+    [after(Elements.closeButton)]: {
+      content: Text("❌"),
+    },
     // modals
     [id(domElementIds.modal)]: {
       display: "none",
@@ -72,8 +85,8 @@ export function getStylesheet() {
     // cards, deck and discard pile
     [list(Elements.card, id(domElementIds.deck))]: {
       borderRadius: "24px",
-      height: 360,
-      width: 256,
+      height: config.cardHeight,
+      width: config.cardWidth,
       color: "#000",
     },
     [id(domElementIds.deck)]: {
@@ -103,20 +116,20 @@ export function getStylesheet() {
       width: 128,
     },
     [id(domElementIds.playerHand)]: {
-      height: 360,
+      height: config.cardHeight,
       margin: 24,
     },
-    [`.${ClassName.InteractiveCard}:hover`]: {
+    [hover(className(ClassName.InteractiveCard))]: {
       transform: "translateY(-7%)",
       zIndex: 7,
     },
     // game over
-    [`.${ClassName.GameOver}`]: {
+    [className(ClassName.GameOver)]: {
       pointerEvents: "none",
       animation:
         `5s ${animations.gameOver}, .1s ${animations.screenShake} infinite`,
     },
-    [`.${ClassName.GameOver}::after`]: {
+    [after(className(ClassName.GameOver))]: {
       content: Text("13"),
       position: "fixed",
     },
@@ -129,12 +142,20 @@ function id(id: string) {
   return `#${id}`;
 }
 
+function className(cn: string) {
+  return `.${cn}`;
+}
+
 function list(...selectors: string[]) {
   return selectors.join(",");
 }
 
 function hover(selector: string) {
   return `${selector}:hover`;
+}
+
+function after(selector: string) {
+  return `${selector}::after`;
 }
 
 function directChildren(selector: string) {
