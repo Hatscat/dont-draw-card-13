@@ -73,10 +73,10 @@ export function defineMoneyCountersRefresh() {
 }
 
 export function defineCardReveal() {
-  const deckBox = tmpRefs.obj;
   const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
+  const deckBox = tmpRefs.obj;
   const setDeckBox = assign(
-    tmpRefs.obj,
+    deckBox,
     execFunc(
       dynamicProp(
         domElementIds.deck,
@@ -122,6 +122,7 @@ export function defineCardReveal() {
                     tmpRefs.currentCard,
                     Text(templateExpression(tmpRefs.currentCard)),
                   ),
+                  assign(tmpRefs.currentCardElement, "this"),
                   execFunc(functions.openCardModal),
                 ),
               },
@@ -319,9 +320,25 @@ export function definePositionHandCards() {
 }
 
 export function defineDiscardCard() {
+  const discardPileBox = tmpRefs.obj;
+  const setDiscardPileBox = assign(
+    discardPileBox,
+    execFunc(
+      dynamicProp(
+        domElementIds.discardPile,
+        constants.getBoundingClientRect,
+      ),
+    ),
+  );
+
   return defineFunc({
     name: functions.discardCard,
     body: statements(
+      // remove the click event handler
+      assign(
+        prop(tmpRefs.currentCardElement, "onclick"),
+        Text(""),
+      ),
       // close the modal
       execFunc(prop(domElementIds.modal, "close")),
       execFunc(
@@ -347,11 +364,31 @@ export function defineDiscardCard() {
           dynamicProp(constants.cardValues, tmpRefs.currentCard),
         ),
       ),
-      // move card to discard pile element
-      // position hand cards
-      execFunc(functions.positionHandCards),
       // refresh money counters
       execFunc(functions.refreshMoneyCounters),
+      // replace the class name with DiscardedCard
+      assign(
+        prop(tmpRefs.currentCardElement, "className"),
+        Text(ClassName.DiscardedCard),
+      ),
+      // move card to discard pile element: left and top position
+      setDiscardPileBox,
+      assign(
+        prop(tmpRefs.currentCardElement, "style", "left"),
+        prop(discardPileBox, "left"),
+      ),
+      assign(
+        prop(tmpRefs.currentCardElement, "style", "top"),
+        prop(discardPileBox, "top"),
+      ),
+      // execFunc("setTimeout", [
+      // add card to discard pile element
+      // execFunc(
+      //   prop(domElementIds.discardPile, "appendChild"),
+      //   tmpRefs.currentCardElement,
+      // ),
+      // position other cards
+      // execFunc(functions.positionHandCards),
     ),
   });
 }

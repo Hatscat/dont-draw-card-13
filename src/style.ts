@@ -4,7 +4,8 @@ import { config } from "./config.ts";
 
 export const enum ClassName {
   InteractiveCard = "a",
-  GameOver = "b",
+  DiscardedCard = "b",
+  GameOver = "c",
 }
 
 export function getStylesheet() {
@@ -98,7 +99,7 @@ export function getStylesheet() {
       position: "fixed",
       outline: "4px solid",
     },
-    [`${Elements.card}>*`]: {
+    [directChildren(Elements.card)]: {
       fontSize: 88,
       color: "#000",
       pointerEvents: "none",
@@ -110,8 +111,11 @@ export function getStylesheet() {
     },
     [id(domElementIds.discardPile)]: {
       alignSelf: "flex-end",
+      outline: "4px dashed #CCC",
+    },
+    [list(id(domElementIds.discardPile), className(ClassName.DiscardedCard))]: {
+      pointerEvents: "none",
       borderRadius: "16px",
-      border: "4px dashed #CCC",
       height: 192,
       width: 128,
     },
@@ -122,6 +126,10 @@ export function getStylesheet() {
     [hover(className(ClassName.InteractiveCard))]: {
       transform: "translateY(-7%)",
       zIndex: 7,
+    },
+    [directChildren(className(ClassName.DiscardedCard), Elements.emojiCard)]: {
+      fontSize: 200,
+      top: -36,
     },
     // game over
     [className(ClassName.GameOver)]: {
@@ -158,6 +166,6 @@ function after(selector: string) {
   return `${selector}::after`;
 }
 
-function directChildren(selector: string) {
-  return `${selector}>*`;
+function directChildren(selector: string, childSelector = "*") {
+  return `${selector}>${childSelector}`;
 }

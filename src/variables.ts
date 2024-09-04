@@ -45,9 +45,10 @@ export const {
     tmpRefs: {
       index: "",
       n: "",
-      currentCard: "",
       obj: "",
       item: "",
+      currentCard: "",
+      currentCardElement: "",
     },
     texts: {},
     data: {
@@ -75,6 +76,6 @@ export const Elements = {
   bigTitle: "h1",
   card: "c",
   emojiCard: "e",
-  textCard: "b",
+  textCard: "b", // no need for this?
   closeButton: "x",
 } as const;
