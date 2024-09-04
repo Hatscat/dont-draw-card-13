@@ -38,6 +38,7 @@ import { initialState } from "./data-store/state.ts";
 import { defineGameOverPage } from "./pages/game-over.ts";
 import {
   defineCardReveal,
+  defineDiscardCard,
   defineLevelCounterRefresh,
   defineMoneyCountersRefresh,
   defineOpenCardModal,
@@ -83,6 +84,7 @@ function getScript(): string {
     defineOpenCardModal(),
     defineOpenShopModal(),
     definePositionHandCards(),
+    defineDiscardCard(),
     // Init the state
     assign(
       data.deckCards,

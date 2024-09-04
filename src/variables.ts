@@ -24,6 +24,7 @@ export const {
       openShopModal: "",
       openCardModal: "",
       positionHandCards: "",
+      discardCard: "",
     },
     domElementIds: {
       page: "",

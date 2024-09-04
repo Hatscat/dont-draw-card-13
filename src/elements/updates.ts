@@ -221,9 +221,7 @@ export function defineOpenCardModal() {
         ),
       ],
       tagProps: {
-        onclick: execFunc(
-          prop(domElementIds.modal, "close"),
-        ),
+        onclick: execFunc(functions.discardCard),
       },
     }),
   ];
@@ -317,5 +315,43 @@ export function definePositionHandCards() {
         ),
       ),
     }),
+  });
+}
+
+export function defineDiscardCard() {
+  return defineFunc({
+    name: functions.discardCard,
+    body: statements(
+      // close the modal
+      execFunc(prop(domElementIds.modal, "close")),
+      execFunc(
+        // push card in discard pile
+        prop(state.discardedCards, "push"),
+        dynamicProp(
+          execFunc(
+            // remove card from hand
+            prop(state.playerHandCards, "splice"),
+            [execFunc(
+              prop(state.playerHandCards, "indexOf"),
+              tmpRefs.currentCard,
+            )],
+          ),
+          0,
+        ),
+      ),
+      // add card value to money
+      assign(
+        state.money,
+        add(
+          state.money,
+          dynamicProp(constants.cardValues, tmpRefs.currentCard),
+        ),
+      ),
+      // move card to discard pile element
+      // position hand cards
+      execFunc(functions.positionHandCards),
+      // refresh money counters
+      execFunc(functions.refreshMoneyCounters),
+    ),
   });
 }
