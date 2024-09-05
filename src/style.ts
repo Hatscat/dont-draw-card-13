@@ -107,7 +107,6 @@ export function getStylesheet() {
       top: -88,
     },
     [id(domElementIds.discardPile)]: {
-      alignSelf: "flex-end",
       outline: "4px dashed #CCC",
     },
     [list(id(domElementIds.discardPile), className(ClassName.DiscardedCard))]: {

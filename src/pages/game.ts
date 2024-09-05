@@ -3,7 +3,6 @@ import {
   defineFunc,
   element,
   execFunc,
-  expressions,
   formatStyle,
   // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
@@ -118,9 +117,20 @@ function gameArea() {
       // Discard pile
       element(Elements.flexWithoutStyle, {
         tagProps: {
-          id: domElementIds.discardPile,
+          style: formatStyle({
+            alignSelf: "flex-end",
+          }),
         },
-        children: "Discard<br>Pile",
+        children: [
+          element(Elements.paragraph, {
+            children: "Discard<br>Pile",
+          }),
+          element(Elements.flexWithoutStyle, {
+            tagProps: {
+              id: domElementIds.discardPile,
+            },
+          }),
+        ],
       }),
     ],
   });
