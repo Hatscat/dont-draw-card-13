@@ -41,9 +41,6 @@ export function getStylesheet() {
       textAlign: "center",
       transition: "all .7s",
     },
-    [directChildren(Elements.page)]: {
-      minWidth: 256,
-    },
     [Elements.bigTitle]: {
       fontSize: 48,
       margin: 16,
@@ -146,26 +143,26 @@ export function getStylesheet() {
   });
 }
 
-function id(id: string) {
+export function id(id: string) {
   return `#${id}`;
 }
 
-function className(cn: string) {
+export function className(cn: string) {
   return `.${cn}`;
 }
 
-function list(...selectors: string[]) {
+export function list(...selectors: string[]) {
   return selectors.join(",");
 }
 
-function hover(selector: string) {
+export function hover(selector: string) {
   return `${selector}:hover`;
 }
 
-function after(selector: string) {
+export function after(selector: string) {
   return `${selector}::after`;
 }
 
-function directChildren(selector: string, childSelector = "*") {
+export function directChildren(selector: string, childSelector = "*") {
   return `${selector}>${childSelector}`;
 }

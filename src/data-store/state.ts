@@ -1,19 +1,11 @@
-// import { config } from "../config.ts";
-
 import { List } from "../deps.ts";
-
-// no need I think?
-// export const enum GameState {
-//   Play = "1",
-//   GameOver = "2",
-// }
 
 export const initialState = {
   level: "1",
   money: "0",
   playerHandCards: List(),
   discardedCards: List(),
-  boss: {
+  boss: { // TODO: to remove? :'(
     text: "0",
     targetElement: "0",
   },

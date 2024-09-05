@@ -24,7 +24,7 @@ import {
   templateExpression,
   Text,
 } from "../deps.ts";
-import { ClassName } from "../style.ts";
+import { ClassName, className } from "../style.ts";
 import {
   animations,
   constants,
@@ -73,7 +73,7 @@ export function defineMoneyCountersRefresh() {
 }
 
 export function defineCardReveal() {
-  const playerHandHtml = prop(domElementIds.playerHand, "innerHTML");
+  const pageHtml = prop(domElementIds.page, "innerHTML");
   const deckBox = tmpRefs.obj;
   const setDeckBox = assign(
     deckBox,
@@ -95,9 +95,9 @@ export function defineCardReveal() {
           execFunc(prop(data.deckCards, "pop")),
         ),
         assign(
-          playerHandHtml,
+          pageHtml,
           add(
-            playerHandHtml,
+            pageHtml,
             element(Elements.card, {
               as: "templateLiteral",
               children: ifElse(
@@ -145,28 +145,27 @@ export function defineCardReveal() {
 function drawValidCard() {
   return group(
     expressions(
+      execFunc(
+        prop(state.playerHandCards, "push"),
+        tmpRefs.currentCard,
+      ),
+      assign(
+        tmpRefs.currentCardElement,
+        prop(domElementIds.page, "lastChild"),
+      ),
       execFunc("setTimeout", [
         defineFunc(
           {
             body: statements(
-              execFunc(
-                prop(state.playerHandCards, "push"),
-                tmpRefs.currentCard,
-              ),
-              execFunc(functions.positionHandCards),
               assign(
-                prop(
-                  domElementIds.playerHand,
-                  "lastChild",
-                  "style",
-                  "animation",
-                ),
+                prop(tmpRefs.currentCardElement, "style", "animation"),
                 Text(""),
               ),
               assign(
-                prop(domElementIds.playerHand, "lastChild", "className"),
+                prop(tmpRefs.currentCardElement, "className"),
                 Text(ClassName.InteractiveCard),
               ),
+              execFunc(functions.positionHandCards),
             ),
           },
         ),
@@ -275,47 +274,61 @@ export function defineOpenShopModal() {
 export function definePositionHandCards() {
   return defineFunc({
     name: functions.positionHandCards,
-    body: loop({
-      init: expressions(
-        assign(tmpRefs.obj, prop(domElementIds.playerHand, "children")),
-        assign(tmpRefs.n, assign(tmpRefs.index, prop(tmpRefs.obj, "length"))),
-      ),
-      condition: assign(
-        tmpRefs.item,
-        dynamicProp(tmpRefs.obj, decrement(tmpRefs.index, 1, { before: true })),
-      ),
-      body: assign(
-        prop(tmpRefs.item, "style", "left"),
-        add(
-          mul(
-            div(
-              execFunc("Math.min", [
-                "innerWidth",
-                mul(tmpRefs.n, config.cardWidth),
-              ]),
-              tmpRefs.n,
-            ),
-            tmpRefs.index,
-          ),
-          execFunc("Math.max", [
-            0,
-            sub(div("innerWidth", 2), mul(tmpRefs.n, config.cardWidth / 2)),
-          ]),
-        ),
-      ),
-      body2: assign(
-        prop(tmpRefs.item, "style", "top"),
-        prop(
-          execFunc(
-            dynamicProp(
-              domElementIds.playerHand,
-              constants.getBoundingClientRect,
+    body: statements(
+      loop({
+        init: expressions(
+          assign(
+            tmpRefs.obj,
+            execFunc(
+              prop(domElementIds.page, "querySelectorAll"),
+              Text(Elements.card + className(ClassName.InteractiveCard)),
             ),
           ),
-          "top",
+          assign(tmpRefs.n, assign(tmpRefs.index, prop(tmpRefs.obj, "length"))),
         ),
-      ),
-    }),
+        condition: assign(
+          tmpRefs.item,
+          dynamicProp(
+            tmpRefs.obj,
+            decrement(tmpRefs.index, 1, { before: true }),
+          ),
+        ),
+        body: assign(
+          prop(tmpRefs.item, "style", "left"),
+          add(
+            mul(
+              div(
+                execFunc("Math.min", [
+                  "innerWidth",
+                  mul(tmpRefs.n, config.cardWidth),
+                ]),
+                tmpRefs.n,
+              ),
+              tmpRefs.index,
+            ),
+            execFunc("Math.max", [
+              0,
+              sub(
+                div("innerWidth", 2),
+                mul(tmpRefs.n, config.cardWidth / 2),
+              ),
+            ]),
+          ),
+        ),
+        body2: assign(
+          prop(tmpRefs.item, "style", "top"),
+          prop(
+            execFunc(
+              dynamicProp(
+                domElementIds.playerHand,
+                constants.getBoundingClientRect,
+              ),
+            ),
+            "top",
+          ),
+        ),
+      }),
+    ),
   });
 }
 
@@ -348,10 +361,10 @@ export function defineDiscardCard() {
           execFunc(
             // remove card from hand
             prop(state.playerHandCards, "splice"),
-            [execFunc(
+            execFunc(
               prop(state.playerHandCards, "indexOf"),
               tmpRefs.currentCard,
-            )],
+            ),
           ),
           0,
         ),
@@ -366,6 +379,7 @@ export function defineDiscardCard() {
       ),
       // refresh money counters
       execFunc(functions.refreshMoneyCounters),
+      // TODO: first: update all cards with the DiscardedCard class zindex to 0, or -1
       // replace the class name with DiscardedCard
       assign(
         prop(tmpRefs.currentCardElement, "className"),
@@ -381,14 +395,8 @@ export function defineDiscardCard() {
         prop(tmpRefs.currentCardElement, "style", "top"),
         prop(discardPileBox, "top"),
       ),
-      // execFunc("setTimeout", [
-      // add card to discard pile element
-      // execFunc(
-      //   prop(domElementIds.discardPile, "appendChild"),
-      //   tmpRefs.currentCardElement,
-      // ),
       // position other cards
-      // execFunc(functions.positionHandCards),
+      execFunc(functions.positionHandCards),
     ),
   });
 }
