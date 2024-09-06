@@ -5,19 +5,15 @@ export const {
   state,
   functions,
   domElementIds,
-  params,
   tmpRefs,
-  texts,
   constants,
   data,
-  animations,
 } = provideTmpVarNames(
   {
     state: initialState,
     functions: {
       goToMenuPage: "",
       goToGamePage: "",
-      goToGameOverPage: "", // TODO: remove
       refreshAllCounters: "",
       cardReveal: "",
       openShopModal: "",
@@ -35,13 +31,7 @@ export const {
       shopMoneyCounter: "",
       deck: "",
       discardPile: "",
-      giveUpButton: "", // TODO: remove? or for tutorial?
-      cardShopButton: "", // TODO: remove? or for tutorial?
       modal: "",
-    },
-    params: {
-      // item: "",
-      // event: "",
     },
     tmpRefs: {
       index: "",
@@ -51,7 +41,6 @@ export const {
       currentCard: "",
       currentCardElement: "",
     },
-    texts: {},
     data: {
       deckCards: "",
     },
@@ -59,11 +48,6 @@ export const {
       getBoundingClientRect: "getBoundingClientRect",
       fromCharCode: "String.fromCharCode",
       cardValues: "",
-    },
-    animations: {
-      cardReveal: "",
-      gameOver: "",
-      screenShake: "",
     },
   } as const,
 );

@@ -1,5 +1,4 @@
 import {
-  and,
   defineFunc,
   element,
   execFunc,
@@ -7,7 +6,6 @@ import {
   // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
   statements,
-  Text,
 } from "../deps.ts";
 import { domElementIds, Elements, functions } from "../variables.ts";
 
@@ -17,7 +15,10 @@ export function defineGamePage() {
       name: functions.goToGamePage,
       body: statements(
         setInnerHtml(domElementIds.page, [
-          ...headerElements(),
+          // Title
+          element(Elements.bigTitle, {
+            children: "Don't draw card 13!",
+          }),
 
           gameArea(),
 
@@ -42,46 +43,11 @@ export function defineGamePage() {
   );
 }
 
-function headerElements() {
-  return [
-    // Title
-    element(Elements.bigTitle, {
-      children: "Don't draw card 13!",
-    }),
-    // Level counter and give up button // TODO: to remove
-    element(Elements.paragraph, {
-      tagProps: {
-        style: formatStyle({
-          flexDirection: "row",
-          marginBottom: 32,
-          gap: "24px",
-        }),
-      },
-      children: [
-        element(Elements.flexWithoutStyle, {
-          tagProps: {
-            id: domElementIds.levelCounter,
-          },
-        }),
-        element(Elements.button, {
-          tagProps: {
-            id: domElementIds.giveUpButton,
-            onclick: Text(and(
-              execFunc("confirm", Text("Give up this game?")),
-              execFunc(functions.goToGameOverPage),
-            )),
-          },
-          children: "❌ Give up",
-        }),
-      ],
-    }),
-  ];
-}
-
 function gameArea() {
   return element(Elements.flexWithoutStyle, {
     tagProps: {
       style: formatStyle({
+        marginTop: 64,
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-evenly",
@@ -102,7 +68,6 @@ function gameArea() {
           }),
         ],
         tagProps: {
-          id: domElementIds.cardShopButton,
           onclick: execFunc(functions.openShopModal),
         },
       }),

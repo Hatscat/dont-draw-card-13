@@ -1,4 +1,4 @@
-import { animations, domElementIds, Elements } from "./variables.ts";
+import { domElementIds, Elements } from "./variables.ts";
 import { formatStylesheet, Text } from "./deps.ts";
 import { config } from "./config.ts";
 
@@ -8,15 +8,21 @@ export const enum ClassName {
   GameOver = "c",
 }
 
+export const enum Animation {
+  CardReveal = "a",
+  GameOver = "b",
+  ScreenShake = "c",
+}
+
 export function getStylesheet() {
   return formatStylesheet({
     // animations
-    [`@keyframes ${animations.cardReveal}`]: formatStylesheet({
+    [`@keyframes ${Animation.CardReveal}`]: formatStylesheet({
       "0%": { transform: "scaleX(-1)", background: "#000" },
       "20%": { background: "#000" },
       "50%": { background: "#FFF" },
     }),
-    [`@keyframes ${animations.gameOver}`]: formatStylesheet({
+    [`@keyframes ${Animation.GameOver}`]: formatStylesheet({
       "0%": { filter: "none", color: "#0000" },
       "100%": {
         filter: "blur(7px)",
@@ -24,7 +30,7 @@ export function getStylesheet() {
         fontSize: 777,
       },
     }),
-    [`@keyframes ${animations.screenShake}`]: formatStylesheet({
+    [`@keyframes ${Animation.ScreenShake}`]: formatStylesheet({
       "33%": { transform: "rotate(2deg)" },
       "77%": { transform: "rotate(-2deg)" },
     }),
@@ -138,7 +144,7 @@ export function getStylesheet() {
     [className(ClassName.GameOver)]: {
       pointerEvents: "none",
       animation:
-        `5s ${animations.gameOver}, .1s ${animations.screenShake} infinite`,
+        `5s ${Animation.GameOver}, .1s ${Animation.ScreenShake} infinite`,
     },
     [after(className(ClassName.GameOver))]: {
       content: Text("13"),

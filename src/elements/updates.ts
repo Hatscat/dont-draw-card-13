@@ -24,9 +24,8 @@ import {
   templateExpression,
   Text,
 } from "../deps.ts";
-import { ClassName, className } from "../style.ts";
+import { Animation, ClassName, className } from "../style.ts";
 import {
-  animations,
   constants,
   data,
   domElementIds,
@@ -41,11 +40,6 @@ export function defineRefreshAllCounters() {
     {
       name: functions.refreshAllCounters,
       body: statements(
-        // Level counter
-        assign(
-          prop(domElementIds.levelCounter, "innerHTML"), // TODO: to remove
-          add(Text("Level "), state.level),
-        ),
         // Deck length counter
         assign(
           prop(domElementIds.deckLengthCounter, "innerHTML"),
@@ -129,7 +123,7 @@ export function defineCardReveal() {
                 style: Text(formatStyle({
                   left: templateExpression(prop(deckBox, "left")),
                   top: templateExpression(prop(deckBox, "top")),
-                  animation: `.5s ${animations.cardReveal}`,
+                  animation: `.5s ${Animation.CardReveal}`,
                 })),
                 onclick: expressions(
                   assign(
@@ -201,7 +195,8 @@ function draw13Card() {
         {
           body: statements(
             assign(prop(domElementIds.page, "className"), Text("")),
-            execFunc(functions.goToGameOverPage),
+            assign(state.gameState, Text("gameOver")),
+            execFunc(functions.goToMenuPage),
           ),
         },
       ),

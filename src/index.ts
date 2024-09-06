@@ -35,7 +35,6 @@ import {
 } from "./variables.ts";
 import { getStylesheet } from "./style.ts";
 import { initialState } from "./data-store/state.ts";
-import { defineGameOverPage } from "./pages/game-over.ts";
 import {
   defineCardReveal,
   defineDiscardCard,
@@ -53,7 +52,7 @@ export function getGameSrc(): SrcProps {
       head: [
         // htmlDoctype(), // The DOCTYPE breaks the CSS sizes without unit
         titleTag("🃏"),
-        viewportMeta(), // TODO: set to landscape for mobile?
+        viewportMeta(),
         // manifestLink(), // TODO: useful for JS13K?
       ],
       body: [
@@ -76,7 +75,6 @@ function getScript(): string {
     // Declare functions
     defineMenuPage(),
     defineGamePage(),
-    defineGameOverPage(),
     defineRefreshAllCounters(),
     defineCardReveal(),
     defineOpenCardModal(),

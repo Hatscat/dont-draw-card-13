@@ -1,14 +1,16 @@
 import { List } from "../deps.ts";
 
+export const enum GameState {
+  Initial = "0",
+  GameOver = "1",
+  GameWon = "2",
+}
+
 export const initialState = {
-  level: "1",
   money: "0",
+  gameState: GameState.Initial,
   playerHandCards: List(),
   discardedCards: List(),
-  boss: { // TODO: to remove? :'(
-    text: "0",
-    targetElement: "0",
-  },
 } as const;
 
 export type State = typeof initialState;
