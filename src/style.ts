@@ -116,7 +116,6 @@ export function getStylesheet() {
       width: 128,
     },
     [id(domElementIds.playerHand)]: {
-      height: config.cardHeight,
       margin: 24,
     },
     [hover(className(ClassName.InteractiveCard))]: {

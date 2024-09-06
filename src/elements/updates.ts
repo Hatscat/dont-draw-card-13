@@ -281,7 +281,8 @@ export function definePositionHandCards() {
             tmpRefs.obj,
             execFunc(
               prop(domElementIds.page, "querySelectorAll"),
-              Text(Elements.card + className(ClassName.InteractiveCard)),
+              Elements.card + className(ClassName.InteractiveCard),
+              { isTemplateLiteral: true },
             ),
           ),
           assign(tmpRefs.n, assign(tmpRefs.index, prop(tmpRefs.obj, "length"))),
@@ -379,7 +380,6 @@ export function defineDiscardCard() {
       ),
       // refresh money counters
       execFunc(functions.refreshMoneyCounters),
-      // TODO: first: update all cards with the DiscardedCard class zindex to 0, or -1
       // replace the class name with DiscardedCard
       assign(
         prop(tmpRefs.currentCardElement, "className"),
@@ -394,6 +394,11 @@ export function defineDiscardCard() {
       assign(
         prop(tmpRefs.currentCardElement, "style", "top"),
         prop(discardPileBox, "top"),
+      ),
+      // set order of the card in the discard pile
+      assign(
+        prop(tmpRefs.currentCardElement, "style", "zIndex"),
+        sub(prop(state.discardedCards, "length"), 88),
       ),
       // position other cards
       execFunc(functions.positionHandCards),
