@@ -26,7 +26,7 @@ export function getStylesheet() {
       "0%": { filter: "none", color: "#0000" },
       "100%": {
         filter: "blur(7px)",
-        color: "#F00",
+        color: "red",
         fontSize: 777,
       },
     }),
@@ -93,7 +93,7 @@ export function getStylesheet() {
         id(domElementIds.deck),
       )
     ]: {
-      borderRadius: "24px",
+      borderRadius: "16px",
       height: config.cardHeight,
       width: config.cardWidth,
       color: "#000",
@@ -108,7 +108,7 @@ export function getStylesheet() {
     [Elements.card]: {
       background: "#FFF",
       position: "fixed",
-      outline: "4px solid",
+      outline: "3px solid",
     },
     [directChildren(Elements.card)]: {
       fontSize: 88,
@@ -133,7 +133,8 @@ export function getStylesheet() {
       margin: 24,
     },
     [hover(className(ClassName.InteractiveCard))]: {
-      transform: "translateY(-7%)",
+      // background: "gold",
+      background: "#FD8",
       zIndex: 7,
     },
     [directChildren(className(ClassName.DiscardedCard), Elements.emojiCard)]: {
