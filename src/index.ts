@@ -39,11 +39,10 @@ import { defineGameOverPage } from "./pages/game-over.ts";
 import {
   defineCardReveal,
   defineDiscardCard,
-  defineLevelCounterRefresh,
-  defineMoneyCountersRefresh,
   defineOpenCardModal,
   defineOpenShopModal,
   definePositionHandCards,
+  defineRefreshAllCounters,
 } from "./elements/updates.ts";
 
 export function getGameSrc(): SrcProps {
@@ -78,8 +77,7 @@ function getScript(): string {
     defineMenuPage(),
     defineGamePage(),
     defineGameOverPage(),
-    defineLevelCounterRefresh(),
-    defineMoneyCountersRefresh(),
+    defineRefreshAllCounters(),
     defineCardReveal(),
     defineOpenCardModal(),
     defineOpenShopModal(),

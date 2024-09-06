@@ -36,8 +36,7 @@ export function defineGamePage() {
           }),
         ]),
         // refresh counters
-        execFunc(functions.refreshLevelCounter),
-        execFunc(functions.refreshMoneyCounters),
+        execFunc(functions.refreshAllCounters),
       ),
     },
   );
@@ -49,7 +48,7 @@ function headerElements() {
     element(Elements.bigTitle, {
       children: "Don't draw card 13!",
     }),
-    // Level counter and give up button
+    // Level counter and give up button // TODO: to remove
     element(Elements.paragraph, {
       tagProps: {
         style: formatStyle({
@@ -94,7 +93,8 @@ function gameArea() {
       // Card shop button
       element(Elements.button, {
         children: [
-          "<br>Card Shop",
+          element(Elements.bigTitle, { children: "🃏" }),
+          "Card Shop",
           element(Elements.paragraph, {
             tagProps: {
               id: domElementIds.gameMoneyCounter,
@@ -108,7 +108,11 @@ function gameArea() {
       }),
       // Deck
       element(Elements.interactive, {
-        children: "Draw",
+        children: element(Elements.paragraph, {
+          tagProps: {
+            id: domElementIds.deckLengthCounter,
+          },
+        }),
         tagProps: {
           id: domElementIds.deck,
           onclick: execFunc(functions.cardReveal),
@@ -123,7 +127,11 @@ function gameArea() {
         },
         children: [
           element(Elements.paragraph, {
-            children: "Discard<br>Pile",
+            children: element(Elements.flexWithoutStyle, {
+              tagProps: {
+                id: domElementIds.discardPileLengthCounter,
+              },
+            }),
           }),
           element(Elements.flexWithoutStyle, {
             tagProps: {

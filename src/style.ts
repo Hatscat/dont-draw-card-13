@@ -58,7 +58,7 @@ export function getStylesheet() {
     },
     [Elements.button]: {
       background: "#333",
-      padding: 16,
+      padding: "24 48",
     },
     [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
@@ -81,10 +81,18 @@ export function getStylesheet() {
       background: "#7777",
     },
     // cards, deck and discard pile
-    [list(Elements.card, id(domElementIds.deck))]: {
+    [
+      list(
+        Elements.card,
+        id(domElementIds.deck),
+      )
+    ]: {
       borderRadius: "24px",
       height: config.cardHeight,
       width: config.cardWidth,
+      color: "#000",
+    },
+    [id(domElementIds.deckLengthCounter)]: {
       color: "#000",
     },
     [id(domElementIds.deck)]: {

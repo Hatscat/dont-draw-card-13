@@ -17,9 +17,8 @@ export const {
     functions: {
       goToMenuPage: "",
       goToGamePage: "",
-      goToGameOverPage: "",
-      refreshLevelCounter: "",
-      refreshMoneyCounters: "",
+      goToGameOverPage: "", // TODO: remove
+      refreshAllCounters: "",
       cardReveal: "",
       openShopModal: "",
       openCardModal: "",
@@ -30,6 +29,8 @@ export const {
       page: "",
       playerHand: "",
       levelCounter: "",
+      deckLengthCounter: "",
+      discardPileLengthCounter: "",
       gameMoneyCounter: "",
       shopMoneyCounter: "",
       deck: "",

@@ -36,23 +36,35 @@ import {
   tmpRefs,
 } from "../variables.ts";
 
-export function defineLevelCounterRefresh() {
+export function defineRefreshAllCounters() {
   return defineFunc(
     {
-      name: functions.refreshLevelCounter,
-      body: assign(
-        prop(domElementIds.levelCounter, "innerHTML"),
-        add(Text("Level "), state.level),
-      ),
-    },
-  );
-}
-
-export function defineMoneyCountersRefresh() {
-  return defineFunc(
-    {
-      name: functions.refreshMoneyCounters,
+      name: functions.refreshAllCounters,
       body: statements(
+        // Level counter
+        assign(
+          prop(domElementIds.levelCounter, "innerHTML"), // TODO: to remove
+          add(Text("Level "), state.level),
+        ),
+        // Deck length counter
+        assign(
+          prop(domElementIds.deckLengthCounter, "innerHTML"),
+          add(
+            Text("Draw ("),
+            prop(data.deckCards, "length"),
+            Text(")"),
+          ),
+        ),
+        // Discard pile length counter
+        assign(
+          prop(domElementIds.discardPileLengthCounter, "innerHTML"),
+          add(
+            Text("Discard Pile ("),
+            prop(state.discardedCards, "length"),
+            Text(")"),
+          ),
+        ),
+        // Game money counter
         assign(
           tmpRefs.n,
           assign(
@@ -94,6 +106,8 @@ export function defineCardReveal() {
           tmpRefs.currentCard,
           execFunc(prop(data.deckCards, "pop")),
         ),
+        execFunc(functions.refreshAllCounters),
+        // create a new card element
         assign(
           pageHtml,
           add(
@@ -262,7 +276,7 @@ export function defineOpenShopModal() {
             },
           }),
         ]),
-        execFunc(functions.refreshMoneyCounters),
+        execFunc(functions.refreshAllCounters),
         execFunc(
           prop(domElementIds.modal, "showModal"),
         ),
@@ -379,7 +393,7 @@ export function defineDiscardCard() {
         ),
       ),
       // refresh money counters
-      execFunc(functions.refreshMoneyCounters),
+      execFunc(functions.refreshAllCounters),
       // replace the class name with DiscardedCard
       assign(
         prop(tmpRefs.currentCardElement, "className"),

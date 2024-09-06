@@ -22,7 +22,7 @@ export function defineGameOverPage() {
             closed: false,
           }),
         ]),
-        execFunc(functions.refreshLevelCounter),
+        execFunc(functions.refreshAllCounters),
       ),
     },
   );
