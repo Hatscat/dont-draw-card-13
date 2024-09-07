@@ -3,6 +3,7 @@ import {
   add,
   assign,
   castNumber,
+  className,
   decrement,
   defineFunc,
   div,
@@ -24,7 +25,7 @@ import {
   templateExpression,
   Text,
 } from "../deps.ts";
-import { Animation, ClassName, className } from "../style.ts";
+import { Animation, ClassName } from "../style.ts";
 import {
   constants,
   data,
@@ -167,7 +168,7 @@ function drawValidCard() {
             body: statements(
               assign(
                 prop(tmpRefs.currentCardElement, "style", "animation"),
-                Text(""),
+                Text(),
               ),
               assign(
                 prop(tmpRefs.currentCardElement, "className"),
@@ -360,7 +361,7 @@ export function defineDiscardCard() {
       // remove the click event handler
       assign(
         prop(tmpRefs.currentCardElement, "onclick"),
-        Text(""),
+        Text(),
       ),
       // close the modal
       execFunc(prop(domElementIds.modal, "close")),

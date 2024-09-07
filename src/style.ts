@@ -1,5 +1,15 @@
 import { domElementIds, Elements } from "./variables.ts";
-import { formatStylesheet, Text } from "./deps.ts";
+import {
+  after,
+  attribute,
+  className,
+  directChildren,
+  formatStylesheet,
+  hover,
+  id,
+  selectorList,
+  Text,
+} from "./deps.ts";
 import { config } from "./config.ts";
 
 export const enum ClassName {
@@ -38,7 +48,7 @@ export function getStylesheet() {
     }),
     // general
     body: { background: "#111" },
-    [list(Elements.page, `${Elements.page} *`)]: {
+    [selectorList(Elements.page, `${Elements.page} *`)]: {
       color: "#EEE",
       fontFamily: "monospace",
       fontSize: 16,
@@ -55,7 +65,7 @@ export function getStylesheet() {
     },
     // buttons
     [
-      list(
+      selectorList(
         Elements.interactive,
         Elements.button,
         Elements.card,
@@ -68,7 +78,7 @@ export function getStylesheet() {
       background: "#333",
       padding: "24 48",
     },
-    [list(hover(Elements.button), hover(id(domElementIds.deck)))]: {
+    [selectorList(hover(Elements.button), hover(id(domElementIds.deck)))]: {
       filter: "invert(1)",
     },
     [Elements.closeButton]: {
@@ -81,7 +91,7 @@ export function getStylesheet() {
     [id(domElementIds.modal)]: {
       display: "none",
     },
-    [`${id(domElementIds.modal)}[open]`]: {
+    [attribute(id(domElementIds.modal), "open")]: {
       display: "flex",
       background: "#000",
     },
@@ -90,7 +100,7 @@ export function getStylesheet() {
     },
     // cards, deck and discard pile
     [
-      list(
+      selectorList(
         Elements.card,
         id(domElementIds.deck),
       )
@@ -126,7 +136,12 @@ export function getStylesheet() {
     [id(domElementIds.discardPile)]: {
       outline: "4px dashed #CCC",
     },
-    [list(id(domElementIds.discardPile), className(ClassName.DiscardedCard))]: {
+    [
+      selectorList(
+        id(domElementIds.discardPile),
+        className(ClassName.DiscardedCard),
+      )
+    ]: {
       pointerEvents: "none",
       borderRadius: "16px",
       height: 192,
@@ -155,28 +170,4 @@ export function getStylesheet() {
     // victory
     // TODO: victory animation
   });
-}
-
-export function id(id: string) {
-  return `#${id}`;
-}
-
-export function className(cn: string) {
-  return `.${cn}`;
-}
-
-export function list(...selectors: string[]) {
-  return selectors.join(",");
-}
-
-export function hover(selector: string) {
-  return `${selector}:hover`;
-}
-
-export function after(selector: string) {
-  return `${selector}::after`;
-}
-
-export function directChildren(selector: string, childSelector = "*") {
-  return `${selector}>${childSelector}`;
 }
