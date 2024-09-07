@@ -171,7 +171,7 @@ function drawValidCard() {
               ),
               assign(
                 prop(tmpRefs.currentCardElement, "className"),
-                Text(ClassName.InteractiveCard),
+                Text(ClassName.InHandCard),
               ),
               execFunc(functions.positionHandCards),
             ),
@@ -290,7 +290,7 @@ export function definePositionHandCards() {
             tmpRefs.obj,
             execFunc(
               prop(domElementIds.page, "querySelectorAll"),
-              Elements.card + className(ClassName.InteractiveCard),
+              Elements.card + className(ClassName.InHandCard),
               { isTemplateLiteral: true },
             ),
           ),

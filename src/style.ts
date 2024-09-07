@@ -3,9 +3,11 @@ import { formatStylesheet, Text } from "./deps.ts";
 import { config } from "./config.ts";
 
 export const enum ClassName {
-  InteractiveCard = "a",
+  InHandCard = "a",
   DiscardedCard = "b",
-  GameOver = "c",
+  ShopCard = "c",
+  ActionCard = "d",
+  GameOver = "e",
 }
 
 export const enum Animation {
@@ -106,19 +108,20 @@ export function getStylesheet() {
       outline: "4px double #777",
     },
     [Elements.card]: {
-      background: "#FFF",
+      background: "#DDD",
       position: "fixed",
       outline: "3px solid",
+      color: "#000",
+      fontSize: 100,
     },
     [directChildren(Elements.card)]: {
-      fontSize: 88,
-      color: "#000",
+      fontSize: "1em",
+      color: "inherit",
       pointerEvents: "none",
     },
     [Elements.emojiCard]: {
-      fontSize: 400,
-      position: "absolute",
-      top: -88,
+      fontSize: "4em",
+      paddingBottom: "22%",
     },
     [id(domElementIds.discardPile)]: {
       outline: "4px dashed #CCC",
@@ -132,14 +135,12 @@ export function getStylesheet() {
     [id(domElementIds.playerHand)]: {
       margin: 24,
     },
-    [hover(className(ClassName.InteractiveCard))]: {
-      // background: "gold",
-      background: "#FD8",
+    [hover(className(ClassName.InHandCard))]: {
+      background: "#FFF",
       zIndex: 7,
     },
-    [directChildren(className(ClassName.DiscardedCard), Elements.emojiCard)]: {
-      fontSize: 200,
-      top: -36,
+    [className(ClassName.DiscardedCard)]: {
+      fontSize: 50,
     },
     // game over
     [className(ClassName.GameOver)]: {
