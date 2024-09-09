@@ -1,7 +1,6 @@
 import {
   add,
   assign,
-  defineFunc,
   dynamicProp,
   element,
   group,
@@ -13,10 +12,8 @@ import {
   isGreater,
   isLess,
   loop,
-  prop,
   Record,
   SrcProps,
-  sub,
   Text,
   titleTag,
   viewportMeta,
@@ -43,6 +40,7 @@ import {
   definePositionHandCards,
   defineRefreshAllCounters,
 } from "./elements/updates.ts";
+import { defineShuffleArray } from "./data-store/helpers.ts";
 
 export function getGameSrc(): SrcProps {
   return {
@@ -72,6 +70,7 @@ function getScript(): string {
     assign(constants.getBoundingClientRect, Text("getBoundingClientRect")),
     assign(constants.fromCharCode, "String.fromCharCode"),
     defineBaseCards(),
+    defineJokerCards(),
     // Declare functions
     defineMenuPage(),
     defineGamePage(),
@@ -81,17 +80,13 @@ function getScript(): string {
     defineOpenShopModal(),
     definePositionHandCards(),
     defineDiscardCard(),
+    defineShuffleArray(),
     // Init the state
     assign(
       data.deckCards,
-      execFunc(
-        prop(execFunc("Object.keys", constants.cardValues), "sort"),
-        defineFunc({
-          body: sub(execFunc("Math.random"), ".5"),
-          safe: false,
-        }),
-      ),
+      execFunc("Object.keys", constants.cardValues),
     ),
+    execFunc(functions.shuffleArray, [data.deckCards]),
     initVariables(state, initialState),
     // Render the Home page
     execFunc(functions.goToMenuPage),
@@ -175,5 +170,17 @@ function defineBaseCards() {
         "}",
       ),
     }),
+  );
+}
+
+function defineJokerCards() {
+  return statements(
+    assign(
+      constants.jokerCards,
+      Record({
+        "🔮": "",
+        "🃏": "",
+      }),
+    ),
   );
 }

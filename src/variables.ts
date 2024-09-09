@@ -20,6 +20,7 @@ export const {
       openCardModal: "",
       positionHandCards: "",
       discardCard: "",
+      shuffleArray: "",
     },
     domElementIds: {
       page: "",
@@ -48,6 +49,7 @@ export const {
       getBoundingClientRect: "getBoundingClientRect",
       fromCharCode: "String.fromCharCode",
       cardValues: "",
+      jokerCards: "",
     },
   } as const,
 );
@@ -62,5 +64,6 @@ export const Elements = {
   card: "c",
   emojiCard: "e",
   textCard: "b", // no need for this?
+  jokerCard: "j",
   closeButton: "x",
 } as const;

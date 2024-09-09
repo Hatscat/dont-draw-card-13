@@ -119,7 +119,6 @@ export function getStylesheet() {
     },
     [Elements.card]: {
       background: "#DDD",
-      position: "fixed",
       outline: "3px solid",
       color: "#000",
       fontSize: 100,
@@ -151,7 +150,8 @@ export function getStylesheet() {
       margin: 24,
     },
     [hover(className(ClassName.InHandCard))]: {
-      background: "#FFF",
+      // background: "#FFF",
+      filter: "contrast(2)",
       zIndex: 7,
     },
     [className(ClassName.DiscardedCard)]: {

@@ -122,6 +122,7 @@ export function defineCardReveal() {
               ),
               tagProps: {
                 style: Text(formatStyle({
+                  position: "fixed",
                   left: templateExpression(prop(deckBox, "left")),
                   top: templateExpression(prop(deckBox, "top")),
                   animation: `.5s ${Animation.CardReveal}`,
@@ -266,7 +267,34 @@ export function defineOpenShopModal() {
           element(Elements.bigTitle, {
             children: "Card Shop",
           }),
+          element(Elements.flexWithoutStyle, {
+            children: "Buy cards to add in your hand",
+          }),
+
           element(Elements.paragraph, {
+            children: [
+              element(Elements.card, {
+                children: element(Elements.jokerCard, {
+                  children: "🔮",
+                }),
+                tagProps: {
+                  className: ClassName.ShopCard,
+                  style: formatStyle({
+                    background: "#FD8",
+                  }),
+                  onclick: execFunc("console.log", "describe card"),
+                },
+              }),
+              element(Elements.button, {
+                children: "Buy for 💰10",
+                tagProps: {
+                  onclick: execFunc("console.log", "Buy selected card"),
+                },
+              }),
+            ],
+          }),
+
+          element(Elements.flexWithoutStyle, {
             tagProps: {
               id: domElementIds.shopMoneyCounter,
             },
