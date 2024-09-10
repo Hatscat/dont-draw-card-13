@@ -78,8 +78,16 @@ export function getStylesheet() {
       background: "#333",
       padding: "24 48",
     },
-    [selectorList(hover(Elements.button), hover(id(domElementIds.deck)))]: {
+    [
+      selectorList(
+        hover(Elements.button),
+        hover(Elements.interactive),
+        hover(Elements.card),
+        hover(Elements.closeButton),
+      )
+    ]: {
       filter: "invert(1)",
+      zIndex: 7,
     },
     [Elements.closeButton]: {
       alignSelf: "flex-end",
@@ -148,11 +156,6 @@ export function getStylesheet() {
     },
     [id(domElementIds.playerHand)]: {
       margin: 24,
-    },
-    [hover(className(ClassName.InHandCard))]: {
-      // background: "#FFF",
-      filter: "contrast(2)",
-      zIndex: 7,
     },
     [className(ClassName.DiscardedCard)]: {
       fontSize: 50,
