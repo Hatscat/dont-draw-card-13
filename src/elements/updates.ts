@@ -64,7 +64,7 @@ export function defineRefreshAllCounters() {
           tmpRefs.n,
           assign(
             prop(domElementIds.gameMoneyCounter, "innerHTML"),
-            add(Text("💰"), state.money),
+            add(Text("Money: 💰"), state.money),
           ),
         ),
         ifThen(

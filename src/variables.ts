@@ -44,6 +44,7 @@ export const {
     },
     data: {
       deckCards: "",
+      shopCards: "",
     },
     constants: {
       getBoundingClientRect: "getBoundingClientRect",

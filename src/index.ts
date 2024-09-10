@@ -87,6 +87,11 @@ function getScript(): string {
       execFunc("Object.keys", constants.cardValues),
     ),
     execFunc(functions.shuffleArray, [data.deckCards]),
+    assign(
+      data.shopCards,
+      execFunc("Object.keys", constants.jokerCards),
+    ),
+    execFunc(functions.shuffleArray, [data.shopCards]),
     initVariables(state, initialState),
     // Render the Home page
     execFunc(functions.goToMenuPage),
@@ -178,8 +183,23 @@ function defineJokerCards() {
     assign(
       constants.jokerCards,
       Record({
-        "🔮": "",
-        "🃏": "",
+        "'🔮'": Text(
+          "To combine with another card to discard: tell if the card 13 is in the next X (value of the discarded card) cards of the deck.",
+        ),
+        "'🔎'": Text("Reveal the next 3 cards of the deck."),
+        "'🗑️'": Text(
+          "To combine with another card to discard: put the next X (value of the discarded card) cards of the deck in the discard pile.",
+        ),
+        "'🚮'": Text("Put the next 3 cards of the deck in the discard pile."),
+        "'🃟'": Text(
+          "Reveal the next 2 cards of the deck, choose one to draw, the other will be discarded.",
+        ),
+        "'💰'": Text(
+          "Increase all your 💰 gains by 10% while this card is in your hand. Discard it for 💰10.",
+        ),
+        "'🂠'": Text("Shuffle the deck."),
+        // "'🔑'": Text(),
+        // "'🔒'": Text(),
       }),
     ),
   );
