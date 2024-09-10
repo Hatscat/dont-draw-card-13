@@ -252,54 +252,71 @@ export function defineOpenCardModal() {
 }
 
 export function defineOpenShopModal() {
+  const selectedCard = tmpRefs.obj;
+  const modalElements = [
+    element(Elements.closeButton, {
+      tagProps: {
+        onclick: execFunc(
+          prop(domElementIds.modal, "close"),
+        ),
+      },
+    }),
+    element(Elements.bigTitle, {
+      children: "Card Shop",
+    }),
+    element(Elements.paragraph, {
+      children: "Select a card to buy and to add in your hand.",
+    }),
+
+    element(Elements.flexWithoutStyle, {
+      tagProps: {
+        id: domElementIds.shopMoneyCounter,
+      },
+    }),
+
+    element(Elements.paragraph, {
+      tagProps: {
+        style: formatStyle({
+          flexDirection: "row",
+          gap: "32px",
+        }),
+      },
+      children: templateExpression(
+        execFunc(
+          prop(execFunc(prop(data.shopCards, "slice"), -2), "map"),
+          `${tmpRefs.item}=>${
+            element(Elements.card, {
+              as: "templateLiteral",
+              children: [tmpRefs.item],
+              tagProps: {
+                className: ClassName.ShopCard,
+                style: formatStyle({
+                  background: "#FD8",
+                }),
+                onclick: execFunc("console.log", Text("describe card")),
+              },
+            })
+          }`,
+        ) + ".join('')",
+      ),
+    }),
+    element(Elements.button, {
+      children: "Buy for 💰10",
+      tagProps: {
+        disabled: "false",
+        onclick: execFunc("console.log", Text("Buy selected card")),
+      },
+    }),
+  ];
+
   return defineFunc(
     {
       name: functions.openShopModal,
       body: statements(
-        setInnerHtml(domElementIds.modal, [
-          element(Elements.closeButton, {
-            tagProps: {
-              onclick: execFunc(
-                prop(domElementIds.modal, "close"),
-              ),
-            },
-          }),
-          element(Elements.bigTitle, {
-            children: "Card Shop",
-          }),
-          element(Elements.flexWithoutStyle, {
-            children: "Buy cards to add in your hand",
-          }),
-
-          element(Elements.paragraph, {
-            children: [
-              element(Elements.card, {
-                children: element(Elements.jokerCard, {
-                  children: "🔮",
-                }),
-                tagProps: {
-                  className: ClassName.ShopCard,
-                  style: formatStyle({
-                    background: "#FD8",
-                  }),
-                  onclick: execFunc("console.log", "describe card"),
-                },
-              }),
-              element(Elements.button, {
-                children: "Buy for 💰10",
-                tagProps: {
-                  onclick: execFunc("console.log", "Buy selected card"),
-                },
-              }),
-            ],
-          }),
-
-          element(Elements.flexWithoutStyle, {
-            tagProps: {
-              id: domElementIds.shopMoneyCounter,
-            },
-          }),
-        ]),
+        assign(
+          prop(domElementIds.modal, "innerHTML"),
+          "`" + modalElements.join("") + "`",
+        ),
         execFunc(functions.refreshAllCounters),
         execFunc(
           prop(domElementIds.modal, "showModal"),
