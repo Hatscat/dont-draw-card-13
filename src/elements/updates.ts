@@ -1,6 +1,7 @@
 import { config } from "../config.ts";
 import {
   add,
+  and,
   assign,
   castNumber,
   className,
@@ -16,10 +17,11 @@ import {
   ifElse,
   ifThen,
   isDifferent,
+  isEqual,
+  isLess,
   loop,
   mul,
   prop,
-  setInnerHtml,
   statements,
   sub,
   templateExpression,
@@ -252,7 +254,9 @@ export function defineOpenCardModal() {
 }
 
 export function defineOpenShopModal() {
-  const selectedCard = tmpRefs.obj;
+  const selectedCard = tmpRefs.currentCardElement;
+  const isSelected = isEqual(tmpRefs.item, selectedCard);
+
   const modalElements = [
     element(Elements.closeButton, {
       tagProps: {
@@ -278,7 +282,7 @@ export function defineOpenShopModal() {
       tagProps: {
         style: formatStyle({
           flexDirection: "row",
-          gap: "32px",
+          // gap: "32px",
         }),
       },
       children: templateExpression(
@@ -287,31 +291,72 @@ export function defineOpenShopModal() {
           `${tmpRefs.item}=>${
             element(Elements.card, {
               as: "templateLiteral",
-              children: [tmpRefs.item],
               tagProps: {
-                className: ClassName.ShopCard,
+                // className: ClassName.ShopCard,
                 style: formatStyle({
+                  padding: 16,
+                  margin: 32,
                   background: "#FD8",
+                  transform: templateExpression(
+                    ifElse(
+                      selectedCard,
+                      ifElse(isSelected, Text("scale(1.1)"), Text("scale(.9)")),
+                      Text(),
+                    ),
+                  ),
+                  fontSize: templateExpression(ifElse(isSelected, 16, 100)),
                 }),
-                onclick: execFunc("console.log", Text("describe card")),
+                onclick: execFunc(
+                  functions.openShopModal,
+                  Text(templateExpression(
+                    ifElse(
+                      isSelected,
+                      Text(),
+                      tmpRefs.item,
+                    ),
+                  )),
+                ),
               },
+              children: [
+                ifElse(
+                  isSelected,
+                  dynamicProp(constants.jokerCards, selectedCard),
+                  tmpRefs.item,
+                ),
+              ],
             })
           }`,
         ) + ".join('')",
       ),
     }),
-    element(Elements.button, {
-      children: "Buy for 💰10",
-      tagProps: {
-        disabled: "false",
-        onclick: execFunc("console.log", Text("Buy selected card")),
-      },
-    }),
+    templateExpression(
+      and(
+        selectedCard,
+        element(Elements.button, {
+          children: ifElse(
+            isLess(state.money, 10),
+            Text("Not enough money"),
+            Text("Buy for 💰10"),
+          ),
+          as: "templateLiteral",
+          tagProps: {
+            onclick: Text(statements(
+              ifThen(isLess(state.money, 10), "return"),
+              assign(state.money, sub(state.money, 10)),
+              execFunc(functions.refreshAllCounters),
+              execFunc(functions.shuffleArray, [data.shopCards]),
+              execFunc(prop(domElementIds.modal, "close")),
+            )),
+          },
+        }),
+      ),
+    ),
   ];
 
   return defineFunc(
     {
       name: functions.openShopModal,
+      args: [selectedCard],
       body: statements(
         assign(
           prop(domElementIds.modal, "innerHTML"),

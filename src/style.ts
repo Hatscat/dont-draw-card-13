@@ -87,8 +87,10 @@ export function getStylesheet() {
       )
     ]: {
       filter: "invert(1)",
-      zIndex: 7,
     },
+    // [hover(Elements.interactive)]: {
+    //   zIndex: 7,
+    // },
     [Elements.closeButton]: {
       alignSelf: "flex-end",
     },

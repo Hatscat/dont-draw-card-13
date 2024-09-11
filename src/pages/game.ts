@@ -6,6 +6,7 @@ import {
   // INLINE_EVENT_ARG_NAME,
   setInnerHtml,
   statements,
+  Text,
 } from "../deps.ts";
 import { domElementIds, Elements, functions } from "../variables.ts";
 
@@ -68,7 +69,7 @@ function gameArea() {
           }),
         ],
         tagProps: {
-          onclick: execFunc(functions.openShopModal),
+          onclick: execFunc(functions.openShopModal, Text()),
         },
       }),
       // Deck
